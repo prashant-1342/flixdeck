@@ -16,7 +16,7 @@ const Navbar = () => {
         <li className="nav-item dropdown">
   <a
     className="nav-link dropdown-toggle"
-    href="#"
+   
     id="navbarDarkDropdownMenuLink"
     role="button"
     data-bs-toggle="dropdown"

@@ -5,26 +5,13 @@ import Popular from '../components/Popular'
 import Upcoming from '../components/Upcoming'
 import TopRated from '../components/TopRated'
 import Footer from '../components/Footer'
-import { createBrowserRouter,RouterProvider } from 'react-router-dom'
-
-
 
 
 const Homepage = () => {
-  const router = createBrowserRouter([
-    {
-      path:'explore/popular',
-      element:(
-        <>
-        
-        </>
-      )
-    }
-  ])
   return (
     <div className='pagescontainer'>
       <Movies/>
-      <Popular/>
+      <Popular/>  
       <Nowplaying/>
       <Upcoming/>
       <TopRated/>
