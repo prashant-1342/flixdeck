@@ -1,12 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-
-// import required modules
 import { Navigation, Pagination } from 'swiper/modules';
+
+// const url = 'https://api.themoviedb.org/3/trending/movie/day?language=en-US';
+// const options = {
+//   method: 'GET',
+//   headers: {
+//     accept: 'application/json',
+//     Authorization: API_KEY
+//   }
+// };
 
 const Popular = () => {
   return (

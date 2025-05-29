@@ -9,7 +9,7 @@
   width: 100%;
    padding-left: 30px;
    padding-right: 20px;
-  z-index: 3;
+  z-index: 1000;
   background-color: #0f0f0f !important;
 }
 
@@ -24,7 +24,22 @@ body{
   padding-left: 2%;
   padding-right: 2%;
 }
+.pagescontainer2{
+  padding-top: 90px;
+  background-color: #0f0f0f;
+}
 
+.heading2{
+  padding-left: 6%;
+  color: white;
+  margin-bottom: 20px;
+}
+.heading1{
+   
+  padding-left: 1%;
+  color: white;
+  margin-bottom: 20px;
+}
 
 
 .thumbnailcontainer{
@@ -129,7 +144,6 @@ body{
   display: flex;
   flex-direction: column;
   border-radius: 20px;
-
   align-items: row;
   color: white;
 }
@@ -140,6 +154,167 @@ body{
     margin-bottom: 10px;
 }
 
+.card{
+  background-color: transparent;
+  
+  
+} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @media(max-width:768){
 
@@ -148,4 +323,8 @@ body{
     margin-bottom: 30px;
     padding-bottom: 100px;
   }
+
+
+
+
 }

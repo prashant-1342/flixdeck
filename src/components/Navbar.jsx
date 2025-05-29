@@ -10,7 +10,7 @@ const Navbar = () => {
     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
       <span className="navbar-toggler-icon"></span>
     </button>
-    <a className="navbar-brand" href="#"><img src="IMDB_Logo_2016.svg.png" height={40} /></a>
+    <Link to='/' className="navbar-brand" ><img src="/IMDB_Logo_2016.svg.png" height={40} /></Link>
     <div className="collapse navbar-collapse" id="navbarTogglerDemo03">
       <ul className="navbar-nav me-auto mb-2 mb-lg-0">
         <li className="nav-item dropdown">
@@ -25,10 +25,10 @@ const Navbar = () => {
     Explore
   </a>
   <ul className="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-    <li><a className="dropdown-item" href="#">Popular</a></li>
-    <li><a className="dropdown-item" href="#">Now Playing</a></li>
-    <li><a className="dropdown-item" href="#">Upcoming</a></li>
-    <li><a className="dropdown-item" href="#">Top Rated</a></li>
+    <li><Link className="dropdown-item" to="/explore/popular"  >Popular</Link></li>
+    <li><Link className="dropdown-item" to="/explore/nowplaying" >Now Playing</Link></li>
+    <li><Link className="dropdown-item" to="/explore/upcoming" >Upcoming</Link></li>
+    <li><Link className="dropdown-item" to="/explore/toprated" >Top Rated</Link></li>
   </ul>
 </li>
         <li className="nav-item dropdown">
@@ -42,25 +42,25 @@ const Navbar = () => {
   >
     Genres
   </a>
-  <ul className="genredropdown dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-   <li><a className="dropdown-item" href="#">Action</a></li>
-<li><a className="dropdown-item" href="#">Adventure</a></li>
-<li><a className="dropdown-item" href="#">Animation</a></li>
-<li><a className="dropdown-item" href="#">Comedy</a></li>
-<li><a className="dropdown-item" href="#">Crime</a></li>
-<li><a className="dropdown-item" href="#">Documentary</a></li>
-<li><a className="dropdown-item" href="#">Drama</a></li>
-<li><a className="dropdown-item" href="#">Family</a></li>
-<li><a className="dropdown-item" href="#">Fantasy</a></li>
-<li><a className="dropdown-item" href="#">History</a></li>
-<li><a className="dropdown-item" href="#">Horror</a></li>
-<li><a className="dropdown-item" href="#">Music</a></li>
-<li><a className="dropdown-item" href="#">Mystery</a></li>
-<li><a className="dropdown-item" href="#">Romance</a></li>
-<li><a className="dropdown-item" href="#">Science Fiction</a></li>
-<li><a className="dropdown-item" href="#">Thriller</a></li>
-<li><a className="dropdown-item" href="#">TV Movie</a></li>
-  </ul>
+ <ul className="genredropdown dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+  <li><Link className="dropdown-item" to="/genre/action">Action</Link></li>
+  <li><Link className="dropdown-item" to="/genre/adventure">Adventure</Link></li>
+  <li><Link className="dropdown-item" to="/genre/animation">Animation</Link></li>
+  <li><Link className="dropdown-item" to="/genre/comedy">Comedy</Link></li>
+  <li><Link className="dropdown-item" to="/genre/crime">Crime</Link></li>
+  <li><Link className="dropdown-item" to="/genre/documentary">Documentary</Link></li>
+  <li><Link className="dropdown-item" to="/genre/drama">Drama</Link></li>
+  <li><Link className="dropdown-item" to="/genre/family">Family</Link></li>
+  <li><Link className="dropdown-item" to="/genre/fantasy">Fantasy</Link></li>
+  <li><Link className="dropdown-item" to="/genre/history">History</Link></li>
+  <li><Link className="dropdown-item" to="/genre/horror">Horror</Link></li>
+  <li><Link className="dropdown-item" to="/genre/music">Music</Link></li>
+  <li><Link className="dropdown-item" to="/genre/mystery">Mystery</Link></li>
+  <li><Link className="dropdown-item" to="/genre/romance">Romance</Link></li>
+  <li><Link className="dropdown-item" to="/genre/sciencefiction">Science Fiction</Link></li>
+  <li><Link className="dropdown-item" to="/genre/thriller">Thriller</Link></li>
+  <li><Link className="dropdown-item" to="/genre/tvmovie">TV Movie</Link></li>
+</ul>
 </li>
 
         

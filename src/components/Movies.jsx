@@ -12,7 +12,7 @@ import { Navigation, Pagination } from 'swiper/modules';
 const Movies = () => {
   return (
     <div className="thumbnailcontainer" style={{ padding: '20px' }}>
-      <h2 style={{ paddingLeft:'10px', color: 'white',marginBottom:'20px' }}>Movies</h2>
+      <h2 className='heading1' >Movies</h2>
 
       <Swiper
         modules={[Navigation, Pagination]}

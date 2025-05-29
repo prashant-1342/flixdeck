@@ -1,9 +1,9 @@
 import React from 'react'
 
-const ExploreTopRated = () => {
+const GenreAdventure = () => {
   return (
-  <div className='pagescontainer2'>
-      <h2 className='heading2'>Top Rated</h2>
+     <div className='pagescontainer2'>
+      <h2 className='heading2'>Adventure</h2>
 
       <div className="container mt-3">
   <div className="row">
@@ -31,4 +31,4 @@ const ExploreTopRated = () => {
   )
 }
 
-export default ExploreTopRated
+export default GenreAdventure
