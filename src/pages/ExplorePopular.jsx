@@ -39,7 +39,7 @@ const ExplorePopular = () => {
 
   const loadMore = () => {
     if (page < totalPages) {
-      setPage((prev) => prev + 2);
+      setPage((prev) => prev + 1);
     }
   };
 
