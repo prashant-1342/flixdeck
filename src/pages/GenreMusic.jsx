@@ -1,33 +1,36 @@
 import React, { useEffect, useState } from 'react';
 
-const GenreMusic = () => {
+const GenreMusic = ({ searchQuery }) => {
   const [popularMovies, setPopularMovies] = useState([]);
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(500); 
+  const [totalPages, setTotalPages] = useState(500);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const fetchPopularMovies = async (pageToLoad) => {
+  const fetchMovies = async (pageToLoad, query = '') => {
     setLoading(true);
     try {
-      const res = await fetch(
-        `https://api.themoviedb.org/3/discover/movie?with_genres=10402&language=en-US&page=${pageToLoad}
+      const baseURL = query
+        ? `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(query)}&language=en-US&page=${pageToLoad}`
+        : `https://api.themoviedb.org/3/discover/movie?with_genres=10402&language=en-US&page=${pageToLoad}`;
 
-
-`,
-        {
-          method: 'GET',
-          headers: {
-            accept: 'application/json',
-            Authorization: `Bearer ${import.meta.env.VITE_TMDB_TOKEN}`,
-          },
-        }
-      );
+      const res = await fetch(baseURL, {
+        method: 'GET',
+        headers: {
+          accept: 'application/json',
+          Authorization: `Bearer ${import.meta.env.VITE_TMDB_TOKEN}`,
+        },
+      });
 
       if (!res.ok) throw new Error(`Failed to fetch page ${pageToLoad}`);
+
       const data = await res.json();
 
-      setPopularMovies((prev) => [...prev, ...data.results]);
+      if (pageToLoad === 1) {
+        setPopularMovies(data.results);
+      } else {
+        setPopularMovies((prev) => [...prev, ...data.results]);
+      }
       setTotalPages(data.total_pages);
     } catch (err) {
       setError(err.message);
@@ -36,9 +39,15 @@ const GenreMusic = () => {
     }
   };
 
+  // Reset page to 1 when searchQuery changes
   useEffect(() => {
-    fetchPopularMovies(page);
-  }, [page]);
+    setPage(1);
+  }, [searchQuery]);
+
+  // Fetch movies when page or searchQuery changes
+  useEffect(() => {
+    fetchMovies(page, searchQuery);
+  }, [page, searchQuery]);
 
   const loadMore = () => {
     if (page < totalPages) {
@@ -50,7 +59,7 @@ const GenreMusic = () => {
 
   return (
     <div className="pagescontainer2">
-      <h2 className="heading2">Music</h2>
+      <h2 className="heading2">{searchQuery ? `Search results for "${searchQuery}"` : 'Music'}</h2>
 
       <div className="container mt-3">
         <div className="row">
@@ -76,13 +85,10 @@ const GenreMusic = () => {
             </div>
           ))}
         </div>
-        {page < totalPages && (
+
+        {page < totalPages && popularMovies.length > 0 && (
           <div className="text-center my-4">
-            <button
-              className="btn btn-primary"
-              onClick={loadMore}
-              disabled={loading}
-            >
+            <button className="btn btn-primary" onClick={loadMore} disabled={loading}>
               {loading ? 'Loading...' : 'Load More'}
             </button>
           </div>

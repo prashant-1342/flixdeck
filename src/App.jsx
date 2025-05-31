@@ -31,11 +31,12 @@ import { createBrowserRouter,RouterProvider,BrowserRouter,Routes,Route } from 'r
 import Popular from './components/Popular';
 
 function App() {
+const [searchQuery, setSearchQuery] = useState('');
 
 
   return (
       <BrowserRouter>
-      <Navbar />
+      <Navbar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/detail" element={<Detail />} />
@@ -43,23 +44,23 @@ function App() {
         <Route path="/explore/upcoming" element={<ExploreUpcoming />} />
         <Route path="/explore/toprated" element={<ExploreTopRated />} />
         <Route path="/explore/nowplaying" element={<ExploreNowPlaying />} />
-         <Route path="/genre/action" element={<GenreAction />} />
-  <Route path="/genre/adventure" element={<GenreAdventure />} />
-  <Route path="/genre/animation" element={<GenreAnimation />} />
-  <Route path="/genre/comedy" element={<GenreComedy />} />
-  <Route path="/genre/crime" element={<GenreCrime />} />
-  <Route path="/genre/documentary" element={<GenreDocumentry />} />
-  <Route path="/genre/drama" element={<GenreDrama />} />
-  <Route path="/genre/fantasy" element={<GenreFantasy />} />
-  <Route path="/genre/family" element={<GenreFamily />} />
-  <Route path="/genre/history" element={<GenreHistory />} />
-  <Route path="/genre/horror" element={<GenreHorror />} />
-  <Route path="/genre/music" element={<GenreMusic />} />
-  <Route path="/genre/mystery" element={<GenreMystery />} />
-  <Route path="/genre/romance" element={<GenreRomance />} />
-  <Route path="/genre/sciencefiction" element={<GenreScienceFiction />} />
-  <Route path="/genre/thriller" element={<GenreThriller />} />
-  <Route path="/genre/tvmovie" element={<GenreTVMovie />} />
+         <Route path="/genre/action" element={<GenreAction searchQuery={searchQuery} />} />
+  <Route path="/genre/adventure" element={<GenreAdventure searchQuery={searchQuery} />} />
+  <Route path="/genre/animation" element={<GenreAnimation searchQuery={searchQuery} />} />
+  <Route path="/genre/comedy" element={<GenreComedy searchQuery={searchQuery} />} />
+  <Route path="/genre/crime" element={<GenreCrime searchQuery={searchQuery} />} />
+  <Route path="/genre/documentary" element={<GenreDocumentry searchQuery={searchQuery} />} />
+  <Route path="/genre/drama" element={<GenreDrama searchQuery={searchQuery} />} />
+  <Route path="/genre/fantasy" element={<GenreFantasy searchQuery={searchQuery} />} />
+  <Route path="/genre/family" element={<GenreFamily searchQuery={searchQuery} />} />
+  <Route path="/genre/history" element={<GenreHistory searchQuery={searchQuery} />} />
+  <Route path="/genre/horror" element={<GenreHorror searchQuery={searchQuery} />} />
+  <Route path="/genre/music" element={<GenreMusic searchQuery={searchQuery} />} />
+  <Route path="/genre/mystery" element={<GenreMystery searchQuery={searchQuery} />} />
+  <Route path="/genre/romance" element={<GenreRomance searchQuery={searchQuery} />} />
+  <Route path="/genre/sciencefiction" element={<GenreScienceFiction searchQuery={searchQuery} />} />
+  <Route path="/genre/thriller" element={<GenreThriller searchQuery={searchQuery} />} />
+  <Route path="/genre/tvmovie" element={<GenreTVMovie searchQuery={searchQuery} />} />
       </Routes>
     </BrowserRouter>
   )
