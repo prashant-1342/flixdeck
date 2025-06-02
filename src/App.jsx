@@ -39,7 +39,7 @@ const [searchQuery, setSearchQuery] = useState('');
       <Navbar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
       <Routes>
         <Route path="/" element={<Homepage />} />
-        <Route path="/detail" element={<Detail />} />
+        <Route path="/detail/:id" element={<Detail />} />
         <Route path="/explore/popular" element={<ExplorePopular searchQuery={searchQuery} />} />
         <Route path="/explore/upcoming" element={<ExploreUpcoming searchQuery={searchQuery} />} />
         <Route path="/explore/toprated" element={<ExploreTopRated searchQuery={searchQuery} />} />

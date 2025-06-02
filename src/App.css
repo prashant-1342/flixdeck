@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
+
 .form-control::placeholder{
   color: white;
   opacity: 1;
@@ -179,9 +180,121 @@ border-radius: 3px;
 
 .card{
   background-color: transparent;
-  
-  
 } 
+
+.occupy{
+ height: 10vh;
+  width: 100vw;
+}
+
+.dettop:after{
+  height: 100%;
+  max-width: 100vw;
+  position: relative;
+   
+   --left-gradient: linear-gradient(90deg, var(--bg-color) 0%, hsla(var(--bg-color-hsl) / 0.99) 6.67%, hsla(var(--bg-color-hsl) / 0.96) 13.33%, hsla(var(--bg-color-hsl) / 0.92) 20%, hsla(var(--bg-color-hsl) / 0.85) 26.67%, hsla(var(--bg-color-hsl) / 0.77) 33.33%, hsla(var(--bg-color-hsl) / 0.67) 40%, hsla(var(--bg-color-hsl) / 0.56) 46.67%, hsla(var(--bg-color-hsl) / 0.44) 53.33%, hsla(var(--bg-color-hsl) / 0.33) 60%, hsla(var(--bg-color-hsl) / 0.23) 66.67%, hsla(var(--bg-color-hsl) / 0.15) 73.33%, hsla(var(--bg-color-hsl) / 0.08) 80%, hsla(var(--bg-color-hsl) / 0.04) 86.67%, hsla(var(--bg-color-hsl) / 0.01) 93.33%, transparent 100%);
+ background-image:  var(--bottom-gradient), var(--left-gradient); 
+}
+
+.dettop:after{
+  --bottom-gradient:linear-gradient(0deg, var(--bg-color) 0%, transparent 33.42%);
+} 
+
+.detailthumbnail{
+  height: 90vh;
+  width: 100vw;
+ object-fit:cover;
+ opacity: 0.2;
+
+}
+
+.impdetail{
+  position: absolute;
+  bottom: 17%;
+  left: 3%;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  width: 50vw;
+  
+}
+
+.detailmoviename{
+  margin-bottom: 1.7rem;
+  font-weight: 700;
+}
+
+.comments{
+  color: rgb(199, 194, 194);
+  font-style: italic;
+  margin-bottom: 10px;
+}
+
+.detailabout{
+   font-size: 1.1rem;
+   margin-bottom: 1rem;
+}
+
+.genres{
+  display: flex;
+  gap:15px;
+  margin-bottom:1rem;
+}
+
+.referlinks{
+  display: flex;
+  margin-bottom: 1rem;
+  gap: 1rem;
+
+}
+
+.refer{
+ font-size: 1.1rem;
+   color: rgb(195, 189, 189);
+}
+
+.playlinks{ 
+  display: flex;
+  gap: 1rem;
+}
+
+
+.playlogo{
+  height: 40px;
+  width: 40px;
+  margin-right: 1rem;
+}
+.avw{
+  color: white;
+}
+
+.castlist{
+  margin-top: 40px;
+  padding: 20px ;
+  width: 100vw;
+  padding-left: 3%;
+
+}
+
+
+.castcards{
+  overflow: hidden;
+  height: 40vh !important;
+  color: white;
+}
+
+.cast-image{
+  height: 80% !important;
+  object-fit: cover;
+  pointer-events: none;
+  margin-bottom: 10px;
+}
+
+.similar{
+  margin-top: 5%;
+  padding-left: 3%;
+}
+
 
 
 
