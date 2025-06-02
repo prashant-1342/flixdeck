@@ -40,10 +40,10 @@ const [searchQuery, setSearchQuery] = useState('');
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/detail" element={<Detail />} />
-        <Route path="/explore/popular" element={<ExplorePopular />} />
-        <Route path="/explore/upcoming" element={<ExploreUpcoming />} />
-        <Route path="/explore/toprated" element={<ExploreTopRated />} />
-        <Route path="/explore/nowplaying" element={<ExploreNowPlaying />} />
+        <Route path="/explore/popular" element={<ExplorePopular searchQuery={searchQuery} />} />
+        <Route path="/explore/upcoming" element={<ExploreUpcoming searchQuery={searchQuery} />} />
+        <Route path="/explore/toprated" element={<ExploreTopRated searchQuery={searchQuery} />} />
+        <Route path="/explore/nowplaying" element={<ExploreNowPlaying  searchQuery={searchQuery}/>} />
          <Route path="/genre/action" element={<GenreAction searchQuery={searchQuery} />} />
   <Route path="/genre/adventure" element={<GenreAdventure searchQuery={searchQuery} />} />
   <Route path="/genre/animation" element={<GenreAnimation searchQuery={searchQuery} />} />

@@ -4,16 +4,14 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-
-// import required modules
-import { Navigation, Pagination } from 'swiper/modules';
+import { Navigation, A11y,Mousewheel,FreeMode } from 'swiper/modules';
 
 const Nowplaying = () => {
    const [movies, setMovies] = useState([]);
     const [error, setError] = useState(null);
   
     const token = import.meta.env.VITE_TMDB_TOKEN;
-    const url = 'https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1';
+    const url = 'https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=3';
   
     const options = {
       method: 'GET',
@@ -40,18 +38,22 @@ const Nowplaying = () => {
      <div className='popular'>
            <h2 style={{ paddingLeft: '10px', color: 'white', marginBottom: '20px' }}>Top Rated</h2>
            <Swiper
-             modules={[Navigation, Pagination]}
+             modules={[Navigation, A11y,Mousewheel,FreeMode]}
              simulateTouch={true}
              allowTouchMove={true}
-             spaceBetween={20}
+               grabCursor={true}
+  mousewheel={{ forceToAxis: true }}
+  freeMode={true}
+             spaceBetween={15}
+               slidesPerGroup={5}
              navigation
-             pagination={{ clickable: true }}
+            
              style={{ paddingBottom: '40px' }}
-             breakpoints={{
-               320: { slidesPerView: 1 },
-               768: { slidesPerView: 3 },
-               1024: { slidesPerView: 5 },
-             }}
+               breakpoints={{
+  320: { slidesPerView: 2 },     // 👈 2 cards on mobile
+  768: { slidesPerView: 2 },     // 👈 4 cards on tablets
+  1024: { slidesPerView: 5 },    // 👈 5 cards on large screens
+}}
            >
              {movies.map((movie) => (
                <SwiperSlide key={movie.id}>

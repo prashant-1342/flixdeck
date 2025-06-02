@@ -1,8 +1,26 @@
 // Navbar.jsx
 import React from 'react';
+import { useState,useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 const Navbar = ({ searchQuery, setSearchQuery }) => {
+  useEffect(() => {
+  const handleLinkClick = () => {
+    const navbar = document.getElementById('navbarTogglerDemo03');
+    if (navbar && navbar.classList.contains('show')) {
+      const collapse = new window.bootstrap.Collapse(navbar, {
+        toggle: true
+      });
+    }
+  };
+
+  const links = document.querySelectorAll('.nav-link, .dropdown-item');
+  links.forEach(link => link.addEventListener('click', handleLinkClick));
+
+  return () => {
+    links.forEach(link => link.removeEventListener('click', handleLinkClick));
+  };
+}, []);
    
   return (
     <>

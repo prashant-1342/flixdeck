@@ -61,7 +61,7 @@ const GenreThriller = ({ searchQuery }) => {
     <div className="pagescontainer2">
       <h2 className="heading2">{searchQuery ? `Search results for "${searchQuery}"` : 'Thriller'}</h2>
 
-      <div className="container mt-3">
+      <div className="container-fluid mt-3">
         <div className="row">
           {popularMovies.map((movie) => (
             <div className="col-6 col-md-2 mb-4 con" key={movie.id}>

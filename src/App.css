@@ -6,11 +6,16 @@
 }
 .navbar{
   position: fixed;
+  color: white;
   width: 100%;
-   padding-left: 30px;
-   padding-right: 20px;
+   padding-left: 2%;
+  padding-right: 2%;
+ 
   z-index: 1000;
   background-color: #0f0f0f !important;
+}
+.nav-link{
+  color: white;
 }
 
 body{
@@ -19,47 +24,44 @@ body{
 }
 
 .pagescontainer{
-  padding-top: 55px;
+  max-width: 100%;
+  padding-top:5%;
   background-color: #0f0f0f;
   padding-left: 2%;
   padding-right: 2%;
 }
 .pagescontainer2{
   padding-top: 90px;
+   padding-left: 2%;
+   padding-right: 2%;
   background-color: #0f0f0f;
 }
 
 .heading2{
-  padding-left: 6%;
+  padding-left: 10px;
   color: white;
+  font-weight: 700;
   margin-bottom: 20px;
 }
 .heading1{
-   
-  padding-left: 1%;
   color: white;
   margin-bottom: 20px;
 }
 
 
-.thumbnailcontainer{
-  height: 100%;
-  width: 100%;
-  
+
+
+.swiper-wrapper {
+  display: flex !important;
+  overflow: visible !important;
 }
 
-
-
-
 .thumbnailcard {
- flex: 1;
-  height: auto;
+  width: 100%;             /* Ensure it scales with the slide */
+  height: 100%;
   object-fit: cover;
-  object-position: left top;
-  display: block; 
-  z-index: 0;
-  
-    
+  display: block;
+  border-radius: 20px;
 }
 
 .blackcover{
@@ -71,18 +73,16 @@ body{
 }
 
 .swiper-slide-card {
-  margin: 0 auto;
-  width: 100%;
-  height: 70vh; 
+
+  max-width: 100%;         /* Prevent oversized cards */
+  height: 70vh;
   display: flex;
-  position: relative;
-  overflow: hidden;
-
+  justify-content: center; /* Center the image */
+  align-items: center;
   border-radius: 20px;
-
+  overflow: hidden;
+  position: relative;
   background-color: black;
-  position:relative;
-  
 }
 
 .blureffect{
@@ -132,8 +132,8 @@ body{
 
 .popular{
   height: 70vh;
-  width: 100%;
-  margin-bottom: 10%;
+  max-width: 100%;
+  margin-bottom: 7%;
 
 }
 
@@ -146,12 +146,35 @@ body{
   border-radius: 20px;
   align-items: row;
   color: white;
+  transition: transform 0.5s ease-in-out, border-color 0.5s ;
+  overflow: visible !important;
+  margin-top: 15px;
+ cursor: pointer;
 }
+
+.swiper-slide-card2:hover{
+transform: translateY(-15px);
+border-color: crimson;
+border-radius: 3px;
+
+}
+
+
+
+
+
+
+
+
 
 .movieimage{
   height: 80%;
     border-radius: 20px;
     margin-bottom: 10px;
+}
+
+.navbar{
+  padding-right: 0px;
 }
 
 .card{
@@ -316,15 +339,35 @@ body{
 
 
 
-@media(max-width:768){
-
-
+@media screen and (max-width: 768px) {
+ 
   .popular{
-    margin-bottom: 30px;
-    padding-bottom: 100px;
+  height: 50vh;
+  max-width: 100%;
+  margin-bottom: 7%;
+  overflow: visible;
+
+}
+
+.navbar{
+  padding-left: 0px;
+}
+
+  .swiper-slide-card{
+    height: 30vh;
   }
 
+    .swiper-slide-card2{
+      height: auto;
+    }
 
+    .pagescontainer{
+      padding-top: 12%;
+     max-width: 100vw;
+    
+    }
+
+  
 
 
 }
