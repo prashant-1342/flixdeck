@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react';
-
+import { Link } from 'react-router-dom';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -57,6 +57,7 @@ const Nowplaying = () => {
            >
              {movies.map((movie) => (
                <SwiperSlide key={movie.id}>
+                  <Link to={`/detail/${movie.id}`} style={{ textDecoration: 'none', color: 'inherit' }}> 
                  <div className="swiper-slide-card2">
                    <img
                      className='movieimage'
@@ -70,6 +71,7 @@ const Nowplaying = () => {
                    <div className="moviename">{movie.title}</div>
                    <div className="moviedate">{movie.release_date}</div>
                  </div>
+                 </Link>
                </SwiperSlide>
              ))}
            </Swiper>
