@@ -57,6 +57,7 @@ const Nowplaying = () => {
            >
              {movies.map((movie) => (
                <SwiperSlide key={movie.id}>
+                
                  <div className="swiper-slide-card2">
                    <img
                      className='movieimage'

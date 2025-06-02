@@ -1,117 +1,52 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { Navigation, A11y, Mousewheel, FreeMode } from 'swiper/modules';
 import { useParams } from 'react-router-dom';
+import Footer from '../components/Footer'
+
 
 
 const Detail = () => {
-  const {id} = useParams()  
+  const { id } = useParams()
   const movieid = parseInt(id);
-  
-  const [cast,setcast] = useState([]);
-    useEffect(() => {
+
+  const [cast, setCast] = useState([]);
+  const token = import.meta.env.VITE_TMDB_TOKEN;
+  useEffect(() => {
     const fetchCast = async () => {
-      const res = await fetch(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=YOUR_API_KEY`);
+
+      const res = await fetch(`https://api.themoviedb.org/3/movie/${id}/credits`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          accept: 'application/json',
+        },
+      });
       const data = await res.json();
-      setCast(data.cast);  // TMDB returns an array here
+      setCast(data.cast);
     };
     fetchCast();
   }, [id]);
 
+  const [similar, setSimilar] = useState([]);
+  useEffect(() => {
+    const fetchsimilar = async () => {
 
-  // const cast = [
-  //   {
-  //     id: 1,
-  //     name: "Daveigh Chase",
-  //     character: "Lilo",
-  //     // profile_path: "/aO3DEaKzNreHB0n5nWDzSLKQElx.jpg"
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Chris Sanders",
-  //     character: "Stitch",
-  //     // profile_path: "/7AI8zLkgdXrrRZfzKqy1Vdk0teR.jpg"
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "Tia Carrere",
-  //     character: "Nani",
-  //     // profile_path: "/f6hhU0XnHO0TfRoUfs2Fn8ECqLz.jpg"
-  //   }
-  //   ,
-  //   {
-  //     id: 3,
-  //     name: "Tia Carrere",
-  //     character: "Nani",
-  //     // profile_path: "/f6hhU0XnHO0TfRoUfs2Fn8ECqLz.jpg"
-  //   }
-  //   ,
-  //   {
-  //     id: 3,
-  //     name: "Tia Carrere",
-  //     character: "Nani",
-  //     // profile_path: "/f6hhU0XnHO0TfRoUfs2Fn8ECqLz.jpg"
-  //   }
-  //   ,
-  //   {
-  //     id: 3,
-  //     name: "Tia Carrere",
-  //     character: "Nani",
-  //     // profile_path: "/f6hhU0XnHO0TfRoUfs2Fn8ECqLz.jpg"
-  //   }
-  //   ,
-  //   {
-  //     id: 3,
-  //     name: "Tia Carrere",
-  //     character: "Nani",
-  //     // profile_path: "/f6hhU0XnHO0TfRoUfs2Fn8ECqLz.jpg"
-  //   }
-  //   ,
-  //   {
-  //     id: 3,
-  //     name: "Tia Carrere",
-  //     character: "Nani",
-  //     // profile_path: "/f6hhU0XnHO0TfRoUfs2Fn8ECqLz.jpg"
-  //   }
-  //   ,
-  //   {
-  //     id: 3,
-  //     name: "Tia Carrere",
-  //     character: "Nani",
-  //     // profile_path: "/f6hhU0XnHO0TfRoUfs2Fn8ECqLz.jpg"
-  //   }
-  //   ,
-  //   {
-  //     id: 3,
-  //     name: "Tia Carrere",
-  //     character: "Nani",
-  //     // profile_path: "/f6hhU0XnHO0TfRoUfs2Fn8ECqLz.jpg"
-  //   }
-  //   ,
-  //   {
-  //     id: 3,
-  //     name: "Tia Carrere",
-  //     character: "Nani",
-  //     // profile_path: "/f6hhU0XnHO0TfRoUfs2Fn8ECqLz.jpg"
-  //   }
-  //   ,
-  //   {
-  //     id: 3,
-  //     name: "Tia Carrere",
-  //     character: "Nani",
-  //     // profile_path: "/f6hhU0XnHO0TfRoUfs2Fn8ECqLz.jpg"
-  //   }
-  //   ,
-  //   {
-  //     id: 3,
-  //     name: "Tia Carrere",
-  //     character: "Nani",
-  //     // profile_path: "/f6hhU0XnHO0TfRoUfs2Fn8ECqLz.jpg"
-  //   }
+      const res2 = await fetch(`
+https://api.themoviedb.org/3/movie/${id}/similar`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          accept: 'application/json',
+        },
+      });
+      const data1 = await res2.json();
+      setSimilar(data1.results)
+    };
+    fetchsimilar();
+  },[id]);
 
-  // ];
+
 
   return (
     <div>
@@ -134,7 +69,7 @@ const Detail = () => {
           </div>
           <div className="playlinks">
             <div className="playbutton">
-              <img className='playlogo' src='play-button.png'/>
+              <img className='playlogo' src='play-button.png' />
               Play Trailer
             </div>
 
@@ -174,17 +109,19 @@ const Detail = () => {
           }}
         >
           {cast.map((actor) => (
-            <SwiperSlide className='castcards'  key={actor.id}>
-             
-                <img
-                  src={`https://image.tmdb.org/t/p/w185${actor.profile_path || '/default.jpg'}`}
-                  alt={actor.name}
-                  className="cast-image"
-                />
-              
-                <div className="cast-name">{actor.name}</div>
-                <div className="cast-character">{actor.character}</div>
-            
+            <SwiperSlide className='castcards' key={actor.id}>
+
+              <img
+                src={actor.profile_path
+                  ? `https://image.tmdb.org/t/p/w185${actor.profile_path}`
+                  : 'https://via.placeholder.com/185x278?text=No+Image'}
+                alt={actor.name}
+                className="cast-image"
+              />
+
+              <div className="cast-name">{actor.name}</div>
+              <div className="cast-character">{actor.character}</div>
+
             </SwiperSlide>
           ))}
         </Swiper>
@@ -198,11 +135,9 @@ const Detail = () => {
 
 
       <div className="similar">
-         <h5 className='avw'>Similar Movies</h5>
+        <h5 className='avw'>Similar Movies</h5>
         <Swiper
           modules={[Navigation, A11y, Mousewheel, FreeMode]}
-        
-
           navigation
           mousewheel
           freeMode
@@ -221,21 +156,24 @@ const Detail = () => {
             },
             1280: {
               slidesPerView: 5,
-              slidesPerGroup:5
+              slidesPerGroup: 5
             }
           }}
         >
-          {cast.map((actor) => (
-            <SwiperSlide  key={actor.id}>
-                 <div className="swiper-slide-card2">
-              
+          {similar.map((movie) => (
+            <SwiperSlide key={movie.id}>
+              <div className="swiper-slide-card2">
+
                 <img
                   className='movieimage'
-                  
-                  src='https://image.tmdb.org/t/p/w185//jqsKbBF28V2Oq5tKPR5USkNufwC.jpg'
+                  src={
+                    movie.poster_path
+                      ? `https://image.tmdb.org/t/p/original/${movie.poster_path}`
+                      : '/fallback-image.jpg'
+                  }
                 />
-                <div className="moviename">{actor.name}</div>
-                <div className="moviedate">{actor.character}</div>
+                <div className="moviename">{movie.title}</div>
+                <div className="moviedate">{movie.release_date}</div>
               </div>
             </SwiperSlide>
           ))}
@@ -247,6 +185,10 @@ const Detail = () => {
         <div>
         </div>
       </div>
+
+      <Footer/>
+
+
     </div>
   )
 }
