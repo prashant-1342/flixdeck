@@ -1,5 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+
+// Loader component
+const ImageWithLoader = ({ src, alt }) => {
+  const [loaded, setLoaded] = useState(false);
+
+  return (
+    <div className="image-wrapper">
+      {!loaded && <div className="loading-line" />}
+      <img
+        className="movieimage"
+        src={src}
+        alt={alt}
+        onLoad={() => setLoaded(true)}
+        style={{ display: loaded ? 'block' : 'none' }}
+      />
+    </div>
+  );
+};
+
 const GenreMystery = ({ searchQuery }) => {
   const [popularMovies, setPopularMovies] = useState([]);
   const [page, setPage] = useState(1);
@@ -65,24 +84,23 @@ const GenreMystery = ({ searchQuery }) => {
         <div className="row">
           {popularMovies.map((movie) => (
             <div className="col-6 col-md-2 mb-4 con" key={movie.id}>
-              <Link  to={`/detail/${movie.id}`} style={{ textDecoration: 'none', color: 'inherit' }}> 
-              <div className="card movie-card h-100 text-white">
-                <img
-                  src={
-                    movie.poster_path
-                      ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                      : '/fallback-image.jpg'
-                  }
-                  className="card-img-top"
-                  alt={movie.title}
-                />
-                <div className="card-body p-2">
-                  <h6 className="card-title mb-1">{movie.title}</h6>
-                  <p className="card-text mb-0" style={{ fontSize: '0.8rem' }}>
-                    {movie.release_date}
-                  </p>
+              <Link to={`/detail/${movie.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                <div className="card movie-card h-100 text-white">
+                  <ImageWithLoader
+                    src={
+                      movie.poster_path
+                        ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                        : '/fallback-image.jpg'
+                    }
+                    alt={movie.title}
+                  />
+                  <div className="card-body p-2">
+                    <h6 className="card-title mb-1">{movie.title}</h6>
+                    <p className="card-text mb-0" style={{ fontSize: '0.8rem' }}>
+                      {movie.release_date}
+                    </p>
+                  </div>
                 </div>
-              </div>
               </Link>
             </div>
           ))}

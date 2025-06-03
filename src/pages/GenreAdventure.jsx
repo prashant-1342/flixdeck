@@ -1,5 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+
+const ImageWithLoader = ({ src, alt }) => {
+  const [loaded, setLoaded] = useState(false);
+
+  return (
+    <div className="image-wrapper">
+      {!loaded && <div className="loading-line" />}
+      <img
+        className="movieimage"
+        src={src}
+        alt={alt}
+        onLoad={() => setLoaded(true)}
+        style={{ display: loaded ? 'block' : 'none' }}
+      />
+    </div>
+  );
+};
+
 const GenreAdventure = ({ searchQuery }) => {
   const [popularMovies, setPopularMovies] = useState([]);
   const [page, setPage] = useState(1);
@@ -39,12 +57,10 @@ const GenreAdventure = ({ searchQuery }) => {
     }
   };
 
-  // Reset page to 1 when searchQuery changes
   useEffect(() => {
     setPage(1);
   }, [searchQuery]);
 
-  // Fetch movies when page or searchQuery changes
   useEffect(() => {
     fetchMovies(page, searchQuery);
   }, [page, searchQuery]);
@@ -67,13 +83,12 @@ const GenreAdventure = ({ searchQuery }) => {
             <div className="col-6 col-md-2 mb-4 con" key={movie.id}>
               <Link  to={`/detail/${movie.id}`} style={{ textDecoration: 'none', color: 'inherit' }}> 
               <div className="card movie-card h-100 text-white">
-                <img
+                <ImageWithLoader
                   src={
                     movie.poster_path
                       ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
                       : '/fallback-image.jpg'
                   }
-                  className="card-img-top"
                   alt={movie.title}
                 />
                 <div className="card-body p-2">
