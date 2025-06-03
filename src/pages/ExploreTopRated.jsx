@@ -7,6 +7,23 @@ const ExploreTopRated = ({ searchQuery }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  const ImageWithLoader = ({ src, alt }) => {
+    const [loaded, setLoaded] = useState(false);
+  
+    return (
+      <>
+        {!loaded && <div className="loading-line" />}
+        <img
+          className="movieimage"
+          src={src}
+          alt={alt}
+          onLoad={() => setLoaded(true)}
+          style={{ display: loaded ? 'block' : 'none' }}
+        />
+      </>
+    );
+  };
+
   const fetchMovies = async (pageToLoad, query = '') => {
     setLoading(true);
     try {
@@ -66,6 +83,7 @@ const ExploreTopRated = ({ searchQuery }) => {
           {popularMovies.map((movie) => (
             <div className="col-6 col-md-2 mb-4 con" key={movie.id}>
               <div className="card movie-card h-100 text-white">
+                <div className="image-wrapper">
                 <img
                   src={
                     movie.poster_path
@@ -75,6 +93,7 @@ const ExploreTopRated = ({ searchQuery }) => {
                   className="card-img-top"
                   alt={movie.title}
                 />
+                </div>
                 <div className="card-body p-2">
                   <h6 className="card-title mb-1">{movie.title}</h6>
                   <p className="card-text mb-0" style={{ fontSize: '0.8rem' }}>

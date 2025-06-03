@@ -29,7 +29,7 @@ const Navbar = ({ searchQuery, setSearchQuery }) => {
     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
       <span className="navbar-toggler-icon"></span>
     </button>
-    <Link to='/' className="navbar-brand" ><img src="/IMDB_Logo_2016.svg.png" height={40} /></Link>
+    <Link to='/' className="navbar-brand" ><img src="/Screenshot 2025-06-04 011825-Photoroom.png" height={45 } /></Link>
     <div className="collapse navbar-collapse" id="navbarTogglerDemo03">
       <ul className="navbar-nav me-auto mb-2 mb-lg-0">
         <li className="nav-item dropdown">

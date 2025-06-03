@@ -9,6 +9,26 @@ import 'swiper/css/pagination';
 // import required modules
 import { Navigation, A11y, Mousewheel, FreeMode } from 'swiper/modules';
 
+
+
+const ImageWithLoader = ({ src, alt }) => {
+  const [loaded, setLoaded] = useState(false);
+
+  return (
+    <>
+      {!loaded && <div className="loading-line" />}
+      <img
+        className="movieimage"
+        src={src}
+        alt={alt}
+        onLoad={() => setLoaded(true)}
+        style={{ display: loaded ? 'block' : 'none' }}
+      />
+    </>
+  );
+};
+
+
 const Nowplaying = () => {
   const [movies, setMovies] = useState([]);
   const [error, setError] = useState(null);
@@ -73,6 +93,7 @@ const Nowplaying = () => {
               <Link to={`/detail/${movie.id}`} style={{ textDecoration: 'none', color: 'inherit' }}> 
 
               <div className="swiper-slide-card2">
+                 <div className="image-wrapper">
               
                 <img
                   className='movieimage'
@@ -83,6 +104,7 @@ const Nowplaying = () => {
                       : '/fallback-image.jpg'
                   }
                 />
+                </div>
                 <div className="moviename">{movie.title}</div>
                 <div className="moviedate">{movie.release_date}</div>
               </div>

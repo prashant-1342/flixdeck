@@ -6,6 +6,22 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
+const ImageWithLoader = ({ src, alt }) => {
+  const [loaded, setLoaded] = useState(false);
+
+  return (
+    <>
+      {!loaded && <div className="loading-line" />}
+      <img
+        className="movieimage"
+        src={src}
+        alt={alt}
+        onLoad={() => setLoaded(true)}
+        style={{ display: loaded ? 'block' : 'none' }}
+      />
+    </>
+  );
+};
 
 const token = import.meta.env.VITE_TMDB_TOKEN;
 console.log(token)
@@ -51,21 +67,22 @@ const Movies = () => {
         allowTouchMove={true}
         style={{ paddingBottom: '40px' }}
       >
-        {movies.map((movie) => (
-          <SwiperSlide key={movie.id}>
-            <div className='swiper-slide-card'>
-              <div className="gradient-overlay"></div>
-                {/* <div className=''>
-                  <img/>
-                  <button/>
-                </div> */}
-              <img src='/images/thewitch2880w.webp'
-                className='thumbnailcard'
-                alt={movie.title}
-              />
+      {movies.map((movie) => (
+        <SwiperSlide key={movie.id}>
+          <div className='swiper-slide-card'>
+               <div className="image-wrapper">
+              {/* <div className='bnm'>
+                <img src='/images/700w.webp'/>
+                <button className='morebtn'>More Details</button>
+              </div> */}
+            <img src='/images/thewitch2880w.webp'
+              className='thumbnailcard'
+              alt={movie.title}
+            />
             </div>
-          </SwiperSlide>
-        ))}
+          </div>
+        </SwiperSlide>
+      ))}
       </Swiper>
     </div>
   );
