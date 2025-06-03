@@ -10,7 +10,7 @@ const ImageWithLoader = ({ src, alt }) => {
   const [loaded, setLoaded] = useState(false);
 
   return (
-    <>
+    <div className="image-wrapper">
       {!loaded && <div className="loading-line" />}
       <img
         className="movieimage"
@@ -19,7 +19,7 @@ const ImageWithLoader = ({ src, alt }) => {
         onLoad={() => setLoaded(true)}
         style={{ display: loaded ? 'block' : 'none' }}
       />
-    </>
+    </div>
   );
 };
 
@@ -70,16 +70,10 @@ const Movies = () => {
       {movies.map((movie) => (
         <SwiperSlide key={movie.id}>
           <div className='swiper-slide-card'>
-               <div className="image-wrapper">
-              {/* <div className='bnm'>
-                <img src='/images/700w.webp'/>
-                <button className='morebtn'>More Details</button>
-              </div> */}
-            <img src='/images/thewitch2880w.webp'
-              className='thumbnailcard'
+            <ImageWithLoader
+              src='/images/thewitch2880w.webp'
               alt={movie.title}
             />
-            </div>
           </div>
         </SwiperSlide>
       ))}

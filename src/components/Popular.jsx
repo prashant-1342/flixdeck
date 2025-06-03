@@ -91,11 +91,9 @@ const Nowplaying = () => {
         {movies.map((movie) => (
             <SwiperSlide  key={movie.id}>
               <Link to={`/detail/${movie.id}`} style={{ textDecoration: 'none', color: 'inherit' }}> 
-
               <div className="swiper-slide-card2">
-                 <div className="image-wrapper">
-              
-                <img
+                
+                <ImageWithLoader
                   className='movieimage'
                   alt={movie.title}
                   src={
@@ -104,7 +102,7 @@ const Nowplaying = () => {
                       : '/fallback-image.jpg'
                   }
                 />
-                </div>
+              
                 <div className="moviename">{movie.title}</div>
                 <div className="moviedate">{movie.release_date}</div>
               </div>

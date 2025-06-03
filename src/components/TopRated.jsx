@@ -6,12 +6,11 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Navigation, A11y, Mousewheel, FreeMode } from 'swiper/modules';
 
-// Loader component
 const ImageWithLoader = ({ src, alt }) => {
   const [loaded, setLoaded] = useState(false);
 
   return (
-    <div className="image-wrapper">
+    <>
       {!loaded && <div className="loading-line" />}
       <img
         className="movieimage"
@@ -20,7 +19,7 @@ const ImageWithLoader = ({ src, alt }) => {
         onLoad={() => setLoaded(true)}
         style={{ display: loaded ? 'block' : 'none' }}
       />
-    </div>
+    </>
   );
 };
 
@@ -57,20 +56,30 @@ const Nowplaying = () => {
     <div className='popular'>
       <h2 style={{ paddingLeft: '10px', color: 'white', marginBottom: '20px' }}>Top Rated</h2>
       <Swiper
-        modules={[Navigation, A11y, Mousewheel, FreeMode]}
-        simulateTouch={true}
-        allowTouchMove={true}
+        modules={[
+          Navigation,
+          A11y,
+          ...(typeof window !== 'undefined' && window.innerWidth >= 1024 ? [Mousewheel, FreeMode] : []),
+        ]}
         grabCursor={true}
-        mousewheel={{ forceToAxis: true }}
-        freeMode={true}
+        mousewheel={typeof window !== 'undefined' && window.innerWidth >= 1024 ? { forceToAxis: true } : false}
+        freeMode={typeof window !== 'undefined' && window.innerWidth >= 1024}
         spaceBetween={15}
-        slidesPerGroup={5}
         navigation
-        style={{ paddingBottom: '40px' }}
+        style={{ paddingBottom: '20px' }}
         breakpoints={{
-          320: { slidesPerView: 2 },     // 👈 2 cards on mobile
-          768: { slidesPerView: 2 },     // 👈 4 cards on tablets
-          1024: { slidesPerView: 5 },    // 👈 5 cards on large screens
+          320: {
+            slidesPerView: 2,
+            slidesPerGroup: 2,
+          },
+          768: {
+            slidesPerView: 3,
+            slidesPerGroup: 3,
+          },
+          1024: {
+            slidesPerView: 5,
+            slidesPerGroup: 5,
+          },
         }}
       >
         {movies.map((movie) => (
