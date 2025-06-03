@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const GenreRomance = ({ searchQuery }) => {
   const [popularMovies, setPopularMovies] = useState([]);
@@ -65,6 +66,7 @@ const GenreRomance = ({ searchQuery }) => {
         <div className="row">
           {popularMovies.map((movie) => (
             <div className="col-6 col-md-2 mb-4 con" key={movie.id}>
+              <Link  to={`/detail/${movie.id}`} style={{ textDecoration: 'none', color: 'inherit' }}> 
               <div className="card movie-card h-100 text-white">
                 <img
                   src={
@@ -82,6 +84,7 @@ const GenreRomance = ({ searchQuery }) => {
                   </p>
                 </div>
               </div>
+              </Link>
             </div>
           ))}
         </div>

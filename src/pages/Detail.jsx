@@ -12,6 +12,8 @@ const Detail = () => {
   const { id } = useParams()
   const movieid = parseInt(id);
 
+
+
   const [cast, setCast] = useState([]);
   const token = import.meta.env.VITE_TMDB_TOKEN;
   useEffect(() => {
@@ -46,30 +48,66 @@ https://api.themoviedb.org/3/movie/${id}/similar`, {
     fetchsimilar();
   },[id]);
 
+    const[about,setAbout] = useState([]);
+  useEffect(()=>{
+    const fetchabout = async ()=>{
+      const res = await fetch(`https://api.themoviedb.org/3/movie/${id}`,{
+        headers:{
+           Authorization:`Bearer ${token}`,
+           accept:'application/json',
+        },
+      });
+      const data = await res.json();
+      setAbout(data);
+    };
+    fetchabout();
+  },[id]);
 
+  function converttoHour(minutes){
+    const hrs = Math.floor(minutes/60);
+    const remain  = minutes % 60
+    return `${hrs}h ${remain}min`;
+  }
+
+  const time = about.runtime
+  const inhrs = converttoHour(time);
+  const imdbid = about.imdb_id
+  
 
   return (
     <div>
       <div className='occupy'></div>
       <div className="dettop">
-        <img className='detailthumbnail' src='https://image.tmdb.org/t/p/w1280/7Zx3wDG5bBtcfk8lcnCWDOLM4Y4.jpg' />
+        <img className='detailthumbnail'    src={`https://image.tmdb.org/t/p/w780${about.backdrop_path}`} // fallback
+  srcSet={`
+    https://image.tmdb.org/t/p/w300${about.backdrop_path} 300w,
+    https://image.tmdb.org/t/p/w780${about.backdrop_path} 780w,
+    https://image.tmdb.org/t/p/w1280${about.backdrop_path} 1280w,
+    https://image.tmdb.org/t/p/original${about.backdrop_path} 2000w
+  `}
+  sizes="(max-width: 600px) 100vw, (max-width: 1024px) 90vw, 80vw"
+              />
 
         <div className="impdetail">
-          <h1 className='detailmoviename'>Lilo & Stitch</h1>
-          <h6 className='comments'>Hold on to your coconuts.</h6>
-          <div className='detailabout'>The wildly funny and touching story of a lonely Hawaiian girl and the fugitive alien who helps to mend her broken family.</div>
+          <h1 className='detailmoviename'>{about.original_title}</h1>
+          <h6 className='comments'>{about.tagline}</h6>
+          <div className='detailabout'>{about.overview}</div>
           <div className="genres">
-            <div className='yearrelease'>2025</div>
-            <div className="genre">Family.Comedy.Science Fiction</div>
-            <div className="duration">1h 48 min</div>
+            <div className='yearrelease'>{about.release_date}</div>
+            <div className="genre">  {about.genres && about.genres.slice(0, 3).map((genre, index) => (
+    <span key={genre.id}>
+      {genre.name}{index < Math.min(2, about.genres.length - 1) ? ' . ' : ''}
+    </span>
+  ))} </div>
+            <div className="duration">{inhrs}</div>
           </div>
           <div className='referlinks'>
-            <a className="refer">IMDB watch</a>
-            <a className='refer'>Home Page</a>
+            <a href={imdbid ? `https://www.imdb.com/title/${imdbid}`:'#' }  className="refer">IMDB</a>
+            <a href={about.homepage? about.homepage:"#" } className='refer'>Home Page</a>
           </div>
           <div className="playlinks">
             <div className="playbutton">
-              <img className='playlogo' src='play-button.png' />
+              <img src='/play-button.png' className='playlogo' />
               Play Trailer
             </div>
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-
+import { Link } from 'react-router-dom';
 const ExplorePopular = ({ searchQuery }) => {
   const [popularMovies, setPopularMovies] = useState([]);
   const [page, setPage] = useState(1);
@@ -64,7 +64,9 @@ const ExplorePopular = ({ searchQuery }) => {
       <div className="container-fluid mt-3 ">
         <div className="row">
           {popularMovies.map((movie) => (
-            <div className="col-6 col-md-2 mb-4 con" key={movie.id}>
+          
+            <div className="col-6 col-md-2 mb-4 con " key={movie.id}>
+              <Link  to={`/detail/${movie.id}`} style={{ textDecoration: 'none', color: 'inherit' }}> 
               <div className="card movie-card h-100 text-white">
                 <img
                   src={
@@ -82,7 +84,9 @@ const ExplorePopular = ({ searchQuery }) => {
                   </p>
                 </div>
               </div>
+              </Link>
             </div>
+         
           ))}
         </div>
 
