@@ -23,22 +23,6 @@ const ImageWithLoader = ({ src, alt }) => {
     </>
   );
 };
-const ImageWithLoader2 = ({ src, alt }) => {
-  const [loaded, setLoaded] = useState(false);
-
-  return (
-    <>
-      {!loaded && <div className="loading-line" />}
-      <img
-        className="cast-image"
-        src={src}
-        alt={alt}
-        onLoad={() => setLoaded(true)}
-        style={{ display: loaded ? 'block' : 'none' }}
-      />
-    </>
-  );
-};
 
 const Detail = () => {
   const { id } = useParams();
@@ -101,7 +85,7 @@ const Detail = () => {
   const imdbid = about.imdb_id;
 
   return (
-    <div>
+    <div className="detail-container">
       <div className="occupy"></div>
       <div className="dettop">
         <img
@@ -152,6 +136,11 @@ const Detail = () => {
 
       <div className="castlist">
         <h5 className="avw">Top Billed Cast</h5>
+      
+       {cast.length === 0 ? (
+    <div className='asx'>No cast found</div>
+  ):(
+
         <Swiper
           modules={[Navigation, A11y, Mousewheel, FreeMode]}
           spaceBetween={20}
@@ -178,8 +167,8 @@ const Detail = () => {
         >
           {cast.map((actor) => (
             <SwiperSlide className="castcards" key={actor.id}>
-              <ImageWithLoader2
-               className="cast-image"
+              <ImageWithLoader
+              className='asw'
                 src={
                   actor.profile_path
                     ? `https://image.tmdb.org/t/p/w185${actor.profile_path}`
@@ -192,7 +181,7 @@ const Detail = () => {
             </SwiperSlide>
           ))}
         </Swiper>
-        <div></div>
+  )}
       </div>
 
       <div className="similar">
