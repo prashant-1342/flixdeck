@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 import { Link } from 'react-router-dom';
 const ExploreTopRated = ({ searchQuery }) => {
   const [popularMovies, setPopularMovies] = useState([]);
@@ -29,8 +30,8 @@ const ExploreTopRated = ({ searchQuery }) => {
     setLoading(true);
     try {
       const url = query
-        ? `/api/movies?query=${encodeURIComponent(query)}&page=${pageToLoad}`
-        : `/api/movies?type=top_rated&page=${pageToLoad}`;
+        ? ` ${backendUrl}/api/movies?query=${encodeURIComponent(query)}&page=${pageToLoad}`
+        : ` ${backendUrl}/api/movies?type=&page=${pageToLoad}`;
 
       const res = await fetch(url);
       if (!res.ok) throw new Error(`Failed to fetch page ${pageToLoad}`);
