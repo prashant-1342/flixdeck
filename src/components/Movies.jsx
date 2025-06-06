@@ -1,31 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, A11y } from 'swiper/modules';
-
+import { Navigation, Pagination, A11y, Autoplay } from 'swiper/modules';
+import { Link } from 'react-router-dom';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
-const ImageWithLoader = ({ src, alt }) => {
-  const [loaded, setLoaded] = useState(false);
-
-  return (
-    <div className="image-wrapper">
-      {!loaded && <div className="loading-line" />}
-      <img
-        className="movieimage"
-        src={src}
-        alt={alt}
-        onLoad={() => setLoaded(true)}
-        style={{ display: loaded ? 'block' : 'none' }}
-      />
-    </div>
-  );
-};
 
 const token = import.meta.env.VITE_TMDB_TOKEN;
-console.log(token)
-
 const movieIds = [27205, 667216, 155, 299534, 496243];
 
 const Movies = () => {
@@ -41,7 +23,7 @@ const Movies = () => {
               accept: 'application/json',
             },
           });
-           if (!res.ok) throw new Error(`Error fetching movie ID ${id}`);
+          if (!res.ok) throw new Error(`Error fetching movie ID ${id}`);
           return await res.json();
         })
       );
@@ -51,32 +33,85 @@ const Movies = () => {
     fetchMovies();
   }, []);
 
-  return (
-    <div style={{ paddingTop: '20px' }}>
-      <h2 className='heading1'>Movies</h2>
 
+
+  return (
+    <div style={{ width: "100%", margin: "0 auto" }}>
+      <h2 className='heading1'>Movies</h2>
       <Swiper
-        modules={[Navigation, Pagination, A11y]}
+        modules={[Navigation, Pagination, Autoplay]}
         spaceBetween={20}
         slidesPerView={1}
-        slidesPerGroup={1}
-        grabCursor={true}
         navigation
         pagination={{ clickable: true }}
-        simulateTouch={true}
-        allowTouchMove={true}
-        style={{ paddingBottom: '40px' }}
+
+      // autoplay={{
+      //   delay: 3000, // 2000 ms = 2 seconds
+      //   disableOnInteraction: false, // keeps autoplay running after user interacts
+      // }}
       >
-      {movies.map((movie) => (
-        <SwiperSlide key={movie.id}>
-          <div className='swiper-slide-card'>
-            <ImageWithLoader
-              src='/images/thewitch2880w.webp'
-              alt={movie.title}
-            />
+        <SwiperSlide>
+           <Link to={`/detail/310131`} style={{ textDecoration: 'none', color: 'inherit' }}>
+          <div className='slide-content'>
+            <img className='slide' src='/images/thewitch2880w.webp' />
+            <div className='overlay'>
+              <img className='movname' src='/images/700w.webp' />
+
+              <button className='details-button'>More Details</button>
+            </div>
           </div>
+          </Link>
         </SwiperSlide>
-      ))}
+
+
+        <SwiperSlide>
+           <Link to={`/detail/667216`} style={{ textDecoration: 'none', color: 'inherit' }}>
+          <div className='slide-content'>
+            <img className='slide' src='/images/2880w.webp' />
+            <div className='overlay'>
+              <img style={{transform:'scale(0.3'}} className='movname'  src='/images/700w (2).webp' />
+              <button className='details-button'>More Details</button>
+            </div>
+          </div>
+          </Link>
+        </SwiperSlide>
+        
+        <SwiperSlide>
+           <Link to={`/detail/396535`} style={{ textDecoration: 'none', color: 'inherit' }}>
+           <div className='slide-content'>
+            <img className='slide' src='/images/2880w (1).webp' />
+            <div className='overlay'>
+              <img className='movname' src='/images/700w (4).webp' />
+
+              <button className='details-button'>More Details</button>
+            </div>
+          </div>
+             </Link>
+        </SwiperSlide>
+        <SwiperSlide>
+           <Link to={`/detail/744857`} style={{ textDecoration: 'none', color: 'inherit' }}>
+           <div className='slide-content'>
+            <img className='slide' src='/images/2880w (2).webp' />
+            <div className='overlay'>
+              <img className='movname' src='/images/700w (3).webp' />
+
+              <button className='details-button'>More Details</button>
+            </div>
+          </div>
+             </Link>
+        </SwiperSlide>
+        <SwiperSlide>
+           <Link to={`/detail/949423`} style={{ textDecoration: 'none', color: 'inherit' }}>
+         <div className='slide-content'>
+            <img className='slide' src='/images/2880w (3).webp' />
+            <div className='overlay'>
+              <img className='movname' src='images/700w (5).webp' />
+
+              <button className='details-button'>More Details</button>
+            </div>
+          </div>
+          </Link>
+        </SwiperSlide>
       </Swiper>
     </div>
   );
