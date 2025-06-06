@@ -29,18 +29,11 @@ const ExploreUpcoming = ({ searchQuery }) => {
   const fetchMovies = async (pageToLoad, query = '') => {
     setLoading(true);
     try {
-      const baseURL = query
-        ? `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(query)}&language=en-US&page=${pageToLoad}`
-        : `https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=${pageToLoad}`;
+      const url = query
+        ? `/api/movies?query=${encodeURIComponent(query)}&page=${pageToLoad}`
+        : `/api/movies?type=upcoming&page=${pageToLoad}`;
 
-      const res = await fetch(baseURL, {
-        method: 'GET',
-        headers: {
-          accept: 'application/json',
-          Authorization: `Bearer ${import.meta.env.VITE_TMDB_TOKEN}`,
-        },
-      });
-
+      const res = await fetch(url);
       if (!res.ok) throw new Error(`Failed to fetch page ${pageToLoad}`);
 
       const data = await res.json();
@@ -48,7 +41,13 @@ const ExploreUpcoming = ({ searchQuery }) => {
       if (pageToLoad === 1) {
         setPopularMovies(data.results);
       } else {
-        setPopularMovies((prev) => [...prev, ...data.results]);
+        // Filter out duplicates by movie ID
+        setPopularMovies((prev) => {
+          const newMovies = data.results.filter(
+            (movie) => !prev.some((existing) => existing.id === movie.id)
+          );
+          return [...prev, ...newMovies];
+        });
       }
       setTotalPages(data.total_pages);
     } catch (err) {
@@ -58,12 +57,17 @@ const ExploreUpcoming = ({ searchQuery }) => {
     }
   };
 
+  // Reset page to 1 when searchQuery changes
   useEffect(() => {
     setPage(1);
   }, [searchQuery]);
 
+  // Fetch movies with debouncing
   useEffect(() => {
-    fetchMovies(page, searchQuery);
+    const handler = setTimeout(() => {
+      fetchMovies(page, searchQuery);
+    }, 300); // 300ms debounce
+    return () => clearTimeout(handler);
   }, [page, searchQuery]);
 
   const loadMore = () => {
@@ -72,7 +76,11 @@ const ExploreUpcoming = ({ searchQuery }) => {
     }
   };
 
+  // Handle error or empty results
   if (error) return <div className="text-white">Error: {error}</div>;
+  if (!popularMovies.length && !loading) {
+    return <div className="text-white">No movies found</div>;
+  }
 
   return (
     <div className="pagescontainer2">
@@ -82,7 +90,11 @@ const ExploreUpcoming = ({ searchQuery }) => {
         <div className="row">
           {popularMovies.map((movie) => (
             <div className="col-6 col-md-2 mb-4 con" key={movie.id}>
-              <Link to={`/detail/${movie.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+              <Link
+                to={`/detail/${movie.id}`}
+                style={{ textDecoration: 'none', color: 'inherit' }}
+                aria-label={`View details for ${movie.title}`}
+              >
                 <div className="card movie-card h-100 text-white">
                   <ImageWithLoader
                     src={

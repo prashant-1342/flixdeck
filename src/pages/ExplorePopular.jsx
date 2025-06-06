@@ -27,36 +27,30 @@ const ExplorePopular = ({ searchQuery }) => {
   const [error, setError] = useState(null);
 
   const fetchMovies = async (pageToLoad, query = '') => {
-    setLoading(true);
-    try {
-      const baseURL = query
-        ? `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(query)}&language=en-US&page=${pageToLoad}`
-        : `https://api.themoviedb.org/3/movie/popular?language=en-US&page=${pageToLoad}`;
+  setLoading(true);
+  try {
+    const url = query
+      ? `/api/movies?query=${encodeURIComponent(query)}&page=${pageToLoad}`
+      : `/api/movies?type=now_playing&page=${pageToLoad}`;
 
-      const res = await fetch(baseURL, {
-        method: 'GET',
-        headers: {
-          accept: 'application/json',
-          Authorization: `Bearer ${import.meta.env.VITE_TMDB_TOKEN}`,
-        },
-      });
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`Failed to fetch page ${pageToLoad}`);
 
-      if (!res.ok) throw new Error(`Failed to fetch page ${pageToLoad}`);
+    const data = await res.json();
 
-      const data = await res.json();
-
-      if (pageToLoad === 1) {
-        setPopularMovies(data.results);
-      } else {
-        setPopularMovies((prev) => [...prev, ...data.results]);
-      }
-      setTotalPages(data.total_pages);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
+    if (pageToLoad === 1) {
+      setPopularMovies(data.results);
+    } else {
+      setPopularMovies((prev) => [...prev, ...data.results]);
     }
-  };
+    setTotalPages(data.total_pages);
+  } catch (err) {
+    setError(err.message);
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   // Reset page to 1 when searchQuery changes
   useEffect(() => {

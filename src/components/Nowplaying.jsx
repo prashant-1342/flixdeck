@@ -23,30 +23,19 @@ const ImageWithLoader = ({ src, alt }) => {
   );
 };
 
-const Nowplaying = () => {
+const Animation = () => {
   const [movies, setMovies] = useState([]);
   const [error, setError] = useState(null);
 
-  const token = import.meta.env.VITE_TMDB_TOKEN;
-  const url = 'https://api.themoviedb.org/3/discover/movie?with_genres=16&language=en-US&page=1';
-
-  const options = {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-  };
-
   useEffect(() => {
-    fetch(url, options)
+    fetch('/api/movies?type=now_playing&page=1')
       .then((res) => {
         if (!res.ok) {
-          throw new Error('Failed to fetch data');
+          throw new Error('Failed to fetch animation movies');
         }
         return res.json();
       })
-      .then((json) => setMovies(json.results))
+      .then((data) => setMovies(data.results))
       .catch((err) => setError(err.message));
   }, []);
 
@@ -54,7 +43,7 @@ const Nowplaying = () => {
 
   return (
     <div className='popular'>
-      <h2 style={{ paddingLeft: '10px', color: 'white', marginBottom: '20px' }}>Animation</h2>
+      <h2 style={{ paddingLeft: '10px', color: 'white', marginBottom: '20px' }}>Now Playing</h2>
       <Swiper
         modules={[
           Navigation,
@@ -105,4 +94,4 @@ const Nowplaying = () => {
   );
 };
 
-export default Nowplaying;
+export default Animation;

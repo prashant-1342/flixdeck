@@ -4,8 +4,8 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import { Navigation, A11y, Mousewheel, FreeMode } from 'swiper/modules';
 import { useParams } from 'react-router-dom';
-import Footer from '../components/Footer';
 import { Link } from 'react-router-dom';
+import Footer from '../components/Footer';
 
 const ImageWithLoader = ({ src, alt }) => {
   const [loaded, setLoaded] = useState(false);
@@ -14,7 +14,7 @@ const ImageWithLoader = ({ src, alt }) => {
     <>
       {!loaded && <div className="loading-line" />}
       <img
-        className="movieimage"
+        className="asw"
         src={src}
         alt={alt}
         onLoad={() => setLoaded(true)}
@@ -27,49 +27,59 @@ const ImageWithLoader = ({ src, alt }) => {
 const Detail = () => {
   const { id } = useParams();
   const movieid = parseInt(id);
-
   const [cast, setCast] = useState([]);
-  const token = import.meta.env.VITE_TMDB_TOKEN;
+  const [similar, setSimilar] = useState([]);
+  const [about, setAbout] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
   useEffect(() => {
     const fetchCast = async () => {
-      const res = await fetch(`https://api.themoviedb.org/3/movie/${id}/credits`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          accept: 'application/json',
-        },
-      });
-      const data = await res.json();
-      setCast(data.cast);
+      setLoading(true);
+      try {
+        const res = await fetch(`/api/movie/${id}/credits`);
+        if (!res.ok) throw new Error('Failed to fetch cast');
+        const data = await res.json();
+        setCast(data.cast);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
     };
     fetchCast();
   }, [id]);
 
-  const [similar, setSimilar] = useState([]);
   useEffect(() => {
     const fetchsimilar = async () => {
-      const res2 = await fetch(`https://api.themoviedb.org/3/movie/${id}/similar`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          accept: 'application/json',
-        },
-      });
-      const data1 = await res2.json();
-      setSimilar(data1.results);
+      setLoading(true);
+      try {
+        const res = await fetch(`/api/movie/${id}/similar`);
+        if (!res.ok) throw new Error('Failed to fetch similar movies');
+        const data = await res.json();
+        setSimilar(data.results);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
     };
     fetchsimilar();
   }, [id]);
 
-  const [about, setAbout] = useState([]);
   useEffect(() => {
     const fetchabout = async () => {
-      const res = await fetch(`https://api.themoviedb.org/3/movie/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          accept: 'application/json',
-        },
-      });
-      const data = await res.json();
-      setAbout(data);
+      setLoading(true);
+      try {
+        const res = await fetch(`/api/movie/${id}`);
+        if (!res.ok) throw new Error('Failed to fetch movie details');
+        const data = await res.json();
+        setAbout(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
     };
     fetchabout();
   }, [id]);
@@ -84,25 +94,28 @@ const Detail = () => {
   const inhrs = converttoHour(time);
   const imdbid = about.imdb_id;
 
+  if (error) return <div className="text-white">Error: {error}</div>;
+  if (loading) return <div className="text-white">Loading...</div>;
+
   return (
     <div className="detail-container">
       <div className="occupy"></div>
       <div className="dettop">
         <img
           className="detailthumbnail"
-          src={`https://image.tmdb.org/t/p/w780${about.backdrop_path}`}
-          srcSet={`
+          src={about.backdrop_path ? `https://image.tmdb.org/t/p/w780${about.backdrop_path}` : '/fallback-image.jpg'}
+          srcSet={about.backdrop_path ? `
             https://image.tmdb.org/t/p/w300${about.backdrop_path} 300w,
             https://image.tmdb.org/t/p/w780${about.backdrop_path} 780w,
             https://image.tmdb.org/t/p/w1280${about.backdrop_path} 1280w,
             https://image.tmdb.org/t/p/original${about.backdrop_path} 2000w
-          `}
+          ` : ''}
           sizes="(max-width: 600px) 100vw, (max-width: 1024px) 90vw, 80vw"
-          alt={about.title}
+          alt={about.title || 'Movie backdrop'}
         />
         <div className="impdetail">
           <h1 className="detailmoviename">{about.original_title}</h1>
-          <h6 className="comments">{about.tagline}</h6>
+          <h6 className="comments">{about.tag個人的tagline}</h6>
           <div className="detailabout">{about.overview}</div>
           <div className="genres">
             <div className="yearrelease">{about.release_date}</div>
@@ -127,7 +140,7 @@ const Detail = () => {
           </div>
           <div className="playlinks">
             <div className="playbutton">
-              <img src="/play-button.png" className="playlogo" />
+              <img src="/play-button.png" className="playlogo" alt="Play trailer" />
               Play Trailer
             </div>
           </div>
@@ -136,52 +149,39 @@ const Detail = () => {
 
       <div className="castlist">
         <h5 className="avw">Top Billed Cast</h5>
-      
-       {cast.length === 0 ? (
-    <div className='asx'>No cast found</div>
-  ):(
-
-        <Swiper
-          modules={[Navigation, A11y, Mousewheel, FreeMode]}
-          spaceBetween={20}
-          navigation
-          mousewheel={{ forceToAxis: true }}
-          freeMode
-          breakpoints={{
-            320: {
-              slidesPerView: 1,
-            },
-            480: {
-              slidesPerView: 2,
-            },
-            768: {
-              slidesPerView: 3,
-            },
-            1024: {
-              slidesPerView: 5,
-            },
-            1280: {
-              slidesPerView: 8,
-            },
-          }}
-        >
-          {cast.map((actor) => (
-            <SwiperSlide className="castcards" key={actor.id}>
-              <ImageWithLoader
-              className='asw'
-                src={
-                  actor.profile_path
-                    ? `https://image.tmdb.org/t/p/w185${actor.profile_path}`
-                    : 'https://via.placeholder.com/185x278?text=No+Image'
-                }
-                alt={actor.name}
-              />
-              <div className="cast-name">{actor.name}</div>
-              <div className="cast-character">{actor.character}</div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-  )}
+        {cast.length === 0 ? (
+          <div className="asx">No cast found</div>
+        ) : (
+          <Swiper
+            modules={[Navigation, A11y, Mousewheel, FreeMode]}
+            spaceBetween={20}
+            navigation
+            mousewheel={{ forceToAxis: true }}
+            freeMode
+            breakpoints={{
+              320: { slidesPerView: 1 },
+              480: { slidesPerView: 2 },
+              768: { slidesPerView: 3 },
+              1024: { slidesPerView: 5 },
+              1280: { slidesPerView: 8 },
+            }}
+          >
+            {cast.map((actor) => (
+              <SwiperSlide className="castcards" key={actor.id}>
+                <ImageWithLoader
+                  src={
+                    actor.profile_path
+                      ? `https://image.tmdb.org/t/p/w185${actor.profile_path}`
+                      : 'https://via.placeholder.com/185x278?text=No+Image'
+                  }
+                  alt={actor.name}
+                />
+                <div className="cast-name">{actor.name}</div>
+                <div className="cast-character">{actor.character}</div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        )}
       </div>
 
       <div className="similar">
@@ -199,23 +199,18 @@ const Detail = () => {
           navigation
           style={{ paddingBottom: '20px' }}
           breakpoints={{
-            320: {
-              slidesPerView: 2,
-              slidesPerGroup: 2,
-            },
-            768: {
-              slidesPerView: 3,
-              slidesPerGroup: 3,
-            },
-            1024: {
-              slidesPerView: 5,
-              slidesPerGroup: 5,
-            },
+            320: { slidesPerView: 2, slidesPerGroup: 2 },
+            768: { slidesPerView: 3, slidesPerGroup: 3 },
+            1024: { slidesPerView: 5, slidesPerGroup: 5 },
           }}
         >
           {similar.map((movie) => (
             <SwiperSlide key={movie.id}>
-              <Link to={`/detail/${movie.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+              <Link
+                to={`/detail/${movie.id}`}
+                style={{ textDecoration: 'none', color: 'inherit' }}
+                aria-label={`View details for ${movie.title}`}
+              >
                 <div className="swiper-slide-card2">
                   <ImageWithLoader
                     src={

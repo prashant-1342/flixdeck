@@ -25,21 +25,14 @@ const ExploreTopRated = ({ searchQuery }) => {
     );
   };
 
-  const fetchMovies = async (pageToLoad, query = '') => {
+   const fetchMovies = async (pageToLoad, query = '') => {
     setLoading(true);
     try {
-      const baseURL = query
-        ? `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(query)}&language=en-US&page=${pageToLoad}`
-        : `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${pageToLoad}`;
+      const url = query
+        ? `/api/movies?query=${encodeURIComponent(query)}&page=${pageToLoad}`
+        : `/api/movies?type=top_rated&page=${pageToLoad}`;
 
-      const res = await fetch(baseURL, {
-        method: 'GET',
-        headers: {
-          accept: 'application/json',
-          Authorization: `Bearer ${import.meta.env.VITE_TMDB_TOKEN}`,
-        },
-      });
-
+      const res = await fetch(url);
       if (!res.ok) throw new Error(`Failed to fetch page ${pageToLoad}`);
 
       const data = await res.json();
@@ -47,7 +40,13 @@ const ExploreTopRated = ({ searchQuery }) => {
       if (pageToLoad === 1) {
         setPopularMovies(data.results);
       } else {
-        setPopularMovies((prev) => [...prev, ...data.results]);
+        // Filter out duplicates by movie ID
+        setPopularMovies((prev) => {
+          const newMovies = data.results.filter(
+            (movie) => !prev.some((existing) => existing.id === movie.id)
+          );
+          return [...prev, ...newMovies];
+        });
       }
       setTotalPages(data.total_pages);
     } catch (err) {
@@ -56,7 +55,6 @@ const ExploreTopRated = ({ searchQuery }) => {
       setLoading(false);
     }
   };
-
   // Reset page to 1 when searchQuery changes
   useEffect(() => {
     setPage(1);

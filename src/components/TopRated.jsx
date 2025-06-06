@@ -23,37 +23,26 @@ const ImageWithLoader = ({ src, alt }) => {
   );
 };
 
-const Nowplaying = () => {
+const TopRated = () => {
   const [movies, setMovies] = useState([]);
   const [error, setError] = useState(null);
 
-  const token = import.meta.env.VITE_TMDB_TOKEN;
-  const url = 'https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=3';
-
-  const options = {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-  };
-
   useEffect(() => {
-    fetch(url, options)
+    fetch('/api/movies?type=top_rated&page=3')
       .then((res) => {
         if (!res.ok) {
-          throw new Error('Failed to fetch data');
+          throw new Error('Failed to fetch top rated movies');
         }
         return res.json();
       })
-      .then((json) => setMovies(json.results))
+      .then((data) => setMovies(data.results))
       .catch((err) => setError(err.message));
   }, []);
 
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className='popular'>
+    <div className="popular">
       <h2 style={{ paddingLeft: '10px', color: 'white', marginBottom: '20px' }}>Top Rated</h2>
       <Swiper
         modules={[
@@ -105,4 +94,4 @@ const Nowplaying = () => {
   );
 };
 
-export default Nowplaying;
+export default TopRated;

@@ -25,37 +25,36 @@ const GenreAnimation = ({ searchQuery }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const fetchMovies = async (pageToLoad, query = '') => {
-    setLoading(true);
-    try {
-      const baseURL = query
-        ? `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(query)}&language=en-US&page=${pageToLoad}`
-        : `https://api.themoviedb.org/3/discover/movie?with_genres=16&language=en-US&page=${pageToLoad}`;
+   const fetchMovies = async (pageToLoad, query = '') => {
+  setLoading(true);
+  try {
+    const url = query
+      ? `/api/movies?query=${encodeURIComponent(query)}&page=${pageToLoad}`
+      : `/api/movies?genre=16&page=${pageToLoad}`;
 
-      const res = await fetch(baseURL, {
-        method: 'GET',
-        headers: {
-          accept: 'application/json',
-          Authorization: `Bearer ${import.meta.env.VITE_TMDB_TOKEN}`,
-        },
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`Failed to fetch page ${pageToLoad}`);
+
+    const data = await res.json();
+
+    if (pageToLoad === 1) {
+      setPopularMovies(data.results);
+    } else {
+      // Filter out duplicates by movie ID
+      setPopularMovies((prev) => {
+        const newMovies = data.results.filter(
+          (movie) => !prev.some((existing) => existing.id === movie.id)
+        );
+        return [...prev, ...newMovies];
       });
-
-      if (!res.ok) throw new Error(`Failed to fetch page ${pageToLoad}`);
-
-      const data = await res.json();
-
-      if (pageToLoad === 1) {
-        setPopularMovies(data.results);
-      } else {
-        setPopularMovies((prev) => [...prev, ...data.results]);
-      }
-      setTotalPages(data.total_pages);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
     }
-  };
+    setTotalPages(data.total_pages);
+  } catch (err) {
+    setError(err.message);
+  } finally {
+    setLoading(false);
+  }
+};
 
   useEffect(() => {
     setPage(1);

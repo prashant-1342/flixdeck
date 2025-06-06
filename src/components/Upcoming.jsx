@@ -23,30 +23,19 @@ const ImageWithLoader = ({ src, alt }) => {
   );
 };
 
-const Nowplaying = () => {
+const Upcoming = () => {
   const [movies, setMovies] = useState([]);
   const [error, setError] = useState(null);
 
-  const token = import.meta.env.VITE_TMDB_TOKEN;
-  const url = 'https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1';
-
-  const options = {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-  };
-
   useEffect(() => {
-    fetch(url, options)
+    fetch('/api/movies?type=upcoming&page=1')
       .then((res) => {
         if (!res.ok) {
-          throw new Error('Failed to fetch data');
+          throw new Error('Failed to fetch upcoming movies');
         }
         return res.json();
       })
-      .then((json) => setMovies(json.results))
+      .then((data) => setMovies(data.results))
       .catch((err) => setError(err.message));
   }, []);
 
@@ -105,4 +94,4 @@ const Nowplaying = () => {
   );
 };
 
-export default Nowplaying;
+export default Upcoming;
