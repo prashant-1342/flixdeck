@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 // Local images
 import theWitchImage from '../assets/images/thewitch2880w.webp';
@@ -22,37 +23,38 @@ import movieName4 from '../assets/images/700w (3).webp';
 import slide5 from '../assets/images/2880w (3).webp';
 import movieName5 from '../assets/images/700w (5).webp';
 
-const token = import.meta.env.VITE_TMDB_TOKEN;
 const movieIds = [310131, 667216, 396535, 744857, 949423];
 
 const Movies = () => {
   const [movies, setMovies] = useState([]);
+  const [error, setError] = useState(null);
 
-  useEffect(() => {
+  useEffect(() => { 
     const fetchMovies = async () => {
-      const results = await Promise.all(
-        movieIds.map(async (id) => {
-          const res = await fetch(`https://api.themoviedb.org/3/movie/${id}`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              accept: 'application/json',
-            },
-          });
-          if (!res.ok) throw new Error(`Error fetching movie ID ${id}`);
-          return await res.json();
-        })
-      );
-      setMovies(results);
+      try {
+        const results = await Promise.all(
+          movieIds.map(async (id) => {
+            const res = await fetch(`${backendUrl}/api/movie/${id}`);
+            if (!res.ok) throw new Error(`Error fetching movie ID ${id}`);
+            return await res.json();
+          })
+        );
+        setMovies(results);
+      } catch (err) {
+        setError(err.message);
+      }
     };
 
     fetchMovies();
   }, []);
 
+  if (error) return <div className="text-white">Error: {error}</div>;
+
   return (
     <div style={{ width: '100%', margin: '0 auto' }}>
       <h2 className='heading1'>Movies</h2>
       <Swiper
-        modules={[Navigation, Pagination, Autoplay]}
+        modules={[Navigation, Pagination, A11y, Autoplay]}
         spaceBetween={20}
         slidesPerView={1}
         navigation

@@ -5,6 +5,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Navigation, A11y, Mousewheel, FreeMode } from 'swiper/modules';
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const ImageWithLoader = ({ src, alt }) => {
   const [loaded, setLoaded] = useState(false);
@@ -28,7 +29,7 @@ const TopRated = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch('/api/movies?type=top_rated&page=3')
+    fetch(`${backendUrl}/api/movies?type=top_rated&page=3`)
       .then((res) => {
         if (!res.ok) {
           throw new Error('Failed to fetch top rated movies');

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 // Loader component
 const ImageWithLoader = ({ src, alt }) => {
@@ -30,8 +31,8 @@ const ExploreUpcoming = ({ searchQuery }) => {
     setLoading(true);
     try {
       const url = query
-        ? `/api/movies?query=${encodeURIComponent(query)}&page=${pageToLoad}`
-        : `/api/movies?type=upcoming&page=${pageToLoad}`;
+        ? `${backendUrl}/api/movies?query=${encodeURIComponent(query)}&page=${pageToLoad}`
+        : `${backendUrl}/api/movies?type=upcoming&page=${pageToLoad}`;
 
       const res = await fetch(url);
       if (!res.ok) throw new Error(`Failed to fetch page ${pageToLoad}`);

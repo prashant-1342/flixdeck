@@ -5,12 +5,13 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Navigation, A11y, Mousewheel, FreeMode } from 'swiper/modules';
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const ImageWithLoader = ({ src, alt }) => {
   const [loaded, setLoaded] = useState(false);
 
   return (
-    <>
+    <div className="image-wrapper">
       {!loaded && <div className="loading-line" />}
       <img
         className="movieimage"
@@ -19,7 +20,7 @@ const ImageWithLoader = ({ src, alt }) => {
         onLoad={() => setLoaded(true)}
         style={{ display: loaded ? 'block' : 'none' }}
       />
-    </>
+    </div>
   );
 };
 
@@ -28,21 +29,25 @@ const Upcoming = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch('/api/movies?type=upcoming&page=1')
-      .then((res) => {
+    const fetchMovies = async () => {
+      try {
+        const res = await fetch(`${backendUrl}/api/movies?type=upcoming&page=1`);
         if (!res.ok) {
           throw new Error('Failed to fetch upcoming movies');
         }
-        return res.json();
-      })
-      .then((data) => setMovies(data.results))
-      .catch((err) => setError(err.message));
+        const data = await res.json();
+        setMovies(data.results);
+      } catch (err) {
+        setError(err.message);
+      }
+    };
+    fetchMovies();
   }, []);
 
-  if (error) return <div>Error: {error}</div>;
+  if (error) return <div className="text-white">Error: {error}</div>;
 
   return (
-    <div className='popular'>
+    <div className="popular">
       <h2 style={{ paddingLeft: '10px', color: 'white', marginBottom: '20px' }}>Upcoming</h2>
       <Swiper
         modules={[

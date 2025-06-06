@@ -6,12 +6,13 @@ import { Navigation, A11y, Mousewheel, FreeMode } from 'swiper/modules';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const ImageWithLoader = ({ src, alt }) => {
   const [loaded, setLoaded] = useState(false);
 
   return (
-    <>
+    <div className="image-wrapper">
       {!loaded && <div className="loading-line" />}
       <img
         className="asw"
@@ -20,7 +21,7 @@ const ImageWithLoader = ({ src, alt }) => {
         onLoad={() => setLoaded(true)}
         style={{ display: loaded ? 'block' : 'none' }}
       />
-    </>
+    </div>
   );
 };
 
@@ -37,7 +38,7 @@ const Detail = () => {
     const fetchCast = async () => {
       setLoading(true);
       try {
-        const res = await fetch(`/api/movie/${id}/credits`);
+        const res = await fetch(`${backendUrl}/api/movie/${id}/credits`);
         if (!res.ok) throw new Error('Failed to fetch cast');
         const data = await res.json();
         setCast(data.cast);
@@ -54,7 +55,7 @@ const Detail = () => {
     const fetchsimilar = async () => {
       setLoading(true);
       try {
-        const res = await fetch(`/api/movie/${id}/similar`);
+        const res = await fetch(`${backendUrl}/api/movie/${id}/similar`);
         if (!res.ok) throw new Error('Failed to fetch similar movies');
         const data = await res.json();
         setSimilar(data.results);
@@ -71,7 +72,7 @@ const Detail = () => {
     const fetchabout = async () => {
       setLoading(true);
       try {
-        const res = await fetch(`/api/movie/${id}`);
+        const res = await fetch(`${backendUrl}/api/movie/${id}`);
         if (!res.ok) throw new Error('Failed to fetch movie details');
         const data = await res.json();
         setAbout(data);
@@ -115,7 +116,7 @@ const Detail = () => {
         />
         <div className="impdetail">
           <h1 className="detailmoviename">{about.original_title}</h1>
-          <h6 className="comments">{about.tag個人的tagline}</h6>
+          <h6 className="comments">{about.tagline}</h6>
           <div className="detailabout">{about.overview}</div>
           <div className="genres">
             <div className="yearrelease">{about.release_date}</div>

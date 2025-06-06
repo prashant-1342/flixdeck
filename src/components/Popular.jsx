@@ -5,12 +5,13 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Navigation, A11y, Mousewheel, FreeMode } from 'swiper/modules';
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const ImageWithLoader = ({ src, alt }) => {
   const [loaded, setLoaded] = useState(false);
 
   return (
-    <>
+    <div className="image-wrapper">
       {!loaded && <div className="loading-line" />}
       <img
         className="movieimage"
@@ -19,7 +20,7 @@ const ImageWithLoader = ({ src, alt }) => {
         onLoad={() => setLoaded(true)}
         style={{ display: loaded ? 'block' : 'none' }}
       />
-    </>
+    </div>
   );
 };
 
@@ -28,16 +29,20 @@ const Popular = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch('/api/movies?type=popular')
-      .then((res) => {
-        if (!res.ok) throw new Error('Failed to fetch movies');
-        return res.json();
-      })
-      .then((data) => setMovies(data.results))
-      .catch((err) => setError(err.message));
+    const fetchMovies = async () => {
+      try {
+        const res = await fetch(`${backendUrl}/api/movies?type=popular&page=1`);
+        if (!res.ok) throw new Error('Failed to fetch popular movies');
+        const data = await res.json();
+        setMovies(data.results);
+      } catch (err) {
+        setError(err.message);
+      }
+    };
+    fetchMovies();
   }, []);
 
-  if (error) return <div>Error: {error}</div>;
+  if (error) return <div className="text-white">Error: {error}</div>;
 
   return (
     <div className="popular">
@@ -83,12 +88,12 @@ const Popular = () => {
             >
               <div className="swiper-slide-card2">
                 <ImageWithLoader
-                  alt={movie.title}
                   src={
                     movie.poster_path
                       ? `https://image.tmdb.org/t/p/original/${movie.poster_path}`
                       : '/fallback-image.jpg'
                   }
+                  alt={movie.title}
                 />
                 <div className="moviename">{movie.title}</div>
                 <div className="moviedate">{movie.release_date}</div>

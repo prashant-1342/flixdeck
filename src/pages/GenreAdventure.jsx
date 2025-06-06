@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const ImageWithLoader = ({ src, alt }) => {
   const [loaded, setLoaded] = useState(false);
@@ -26,35 +27,29 @@ const GenreAdventure = ({ searchQuery }) => {
   const [error, setError] = useState(null);
 
   const fetchMovies = async (pageToLoad, query = '') => {
-  setLoading(true);
-  try {
-    const url = query
-      ? `/api/movies?query=${encodeURIComponent(query)}&page=${pageToLoad}`
-      : `/api/movies?genre=12&page=${pageToLoad}`;
+    setLoading(true);
+    try {
+      const url = query
+        ? `${backendUrl}/api/movies?query=${encodeURIComponent(query)}&page=${pageToLoad}`
+        : `${backendUrl}/api/movies?genre=12&page=${pageToLoad}`;
 
-    const res = await fetch(url);
-    if (!res.ok) throw new Error(`Failed to fetch page ${pageToLoad}`);
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`Failed to fetch page ${pageToLoad}`);
 
-    const data = await res.json();
+      const data = await res.json();
 
-    if (pageToLoad === 1) {
-      setPopularMovies(data.results);
-    } else {
-      // Filter out duplicates by movie ID
-      setPopularMovies((prev) => {
-        const newMovies = data.results.filter(
-          (movie) => !prev.some((existing) => existing.id === movie.id)
-        );
-        return [...prev, ...newMovies];
-      });
+      if (pageToLoad === 1) {
+        setPopularMovies(data.results);
+      } else {
+        setPopularMovies((prev) => [...prev, ...data.results]);
+      }
+      setTotalPages(data.total_pages);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
     }
-    setTotalPages(data.total_pages);
-  } catch (err) {
-    setError(err.message);
-  } finally {
-    setLoading(false);
-  }
-};
+  };
 
   useEffect(() => {
     setPage(1);
@@ -80,23 +75,23 @@ const GenreAdventure = ({ searchQuery }) => {
         <div className="row">
           {popularMovies.map((movie) => (
             <div className="col-6 col-md-2 mb-4 con" key={movie.id}>
-              <Link  to={`/detail/${movie.id}`} style={{ textDecoration: 'none', color: 'inherit' }}> 
-              <div className="card movie-card h-100 text-white">
-                <ImageWithLoader
-                  src={
-                    movie.poster_path
-                      ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                      : '/fallback-image.jpg'
-                  }
-                  alt={movie.title}
-                />
-                <div className="card-body p-2">
-                  <h6 className="card-title mb-1">{movie.title}</h6>
-                  <p className="card-text mb-0" style={{ fontSize: '0.8rem' }}>
-                    {movie.release_date}
-                  </p>
+              <Link to={`/detail/${movie.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                <div className="card movie-card h-100 text-white">
+                  <ImageWithLoader
+                    src={
+                      movie.poster_path
+                        ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                        : '/fallback-image.jpg'
+                    }
+                    alt={movie.title}
+                  />
+                  <div className="card-body p-2">
+                    <h6 className="card-title mb-1">{movie.title}</h6>
+                    <p className="card-text mb-0" style={{ fontSize: '0.8rem' }}>
+                      {movie.release_date}
+                    </p>
+                  </div>
                 </div>
-              </div>
               </Link>
             </div>
           ))}
