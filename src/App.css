@@ -413,7 +413,7 @@ border-radius: 3px;
 .details-button {
   background-color: rgba(255, 69, 0, 0.8);
   border: none;
-
+width: 9rem;
   padding: 1rem 1rem;
   border-radius: 5px;
   cursor: pointer;
@@ -619,14 +619,8 @@ border-radius: 3px;
       object-fit: cover;
     }
 
-    .details-button{
-      
-      padding-top: 5px;
-      padding-bottom: 5px;
-      padding-left: 5px;
-      padding-right: 5px;
-    }
-    
+
+  
   
 
 }
