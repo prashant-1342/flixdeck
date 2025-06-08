@@ -61,7 +61,8 @@ const Movies = () => {
         pagination={{ clickable: true }}
         // autoplay={{ delay: 3000, disableOnInteraction: false }}
       >
-        <SwiperSlide>
+        <SwiperSlide className='vyu'
+        >
           <Link to={`/detail/310131`} style={{ textDecoration: 'none', color: 'inherit' }}>
             <div className='slide-content'>
               <img className='slide' src={theWitchImage} alt='The Witch' />

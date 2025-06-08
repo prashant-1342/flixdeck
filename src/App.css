@@ -373,7 +373,7 @@ border-radius: 3px;
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     object-fit: fill;
-    
+ 
 }
 
 
@@ -413,8 +413,8 @@ border-radius: 3px;
 .details-button {
   background-color: rgba(255, 69, 0, 0.8);
   border: none;
-  width: 9rem;
-  padding: 15px 1px;
+
+  padding: 1rem 1rem;
   border-radius: 5px;
   cursor: pointer;
   color: white;
@@ -422,6 +422,8 @@ border-radius: 3px;
   margin: 0 auto;
 
 }
+
+
 
 .movname{
   transform: scale(0.8);
@@ -612,7 +614,19 @@ border-radius: 3px;
     
     }
 
-  
+    .slide{
+      height: 30vh;
+      object-fit: cover;
+    }
 
+    .details-button{
+      
+      padding-top: 5px;
+      padding-bottom: 5px;
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+    
+  
 
 }
