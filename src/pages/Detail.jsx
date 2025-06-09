@@ -28,7 +28,7 @@ const ImageWithLoader = ({ src, alt }) => {
 
 const Detail = ({ searchQuery }) => {
   if (searchQuery) {
-    return <SearchPage searchQuery={searchQuery} />; // ✅ Add this
+    return <SearchPage searchQuery={searchQuery} />;
   }
   const { id } = useParams();
   const movieid = parseInt(id);

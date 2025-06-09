@@ -443,6 +443,112 @@ width: 9rem;
   transform: scale(0.8);
 }
 
+/* Trailer Modal Overlay */
+.trailer-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+
+
+/* Modal Content - maintains 16:9 aspect ratio */
+.trailer-content {
+  position: relative;
+  width: 80%;
+  max-width: 800px;
+  aspect-ratio: 16 / 9;
+  background-color: black;
+
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+/* Close Button */
+.close-button {
+  position: absolute;
+  top: -2rem;
+  right: -2rem;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  z-index: 10;
+}
+
+/* Cursor pointer for play button */
+.playbutton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: white;
+  font-weight: 600;
+}
+
+.playbutton:hover {
+  opacity: 0.8;
+}
+
+.playbutton.disabled {
+  color: gray;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
