@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-// Loader component
+
 const ImageWithLoader = ({ src, alt }) => {
   const [loaded, setLoaded] = useState(false);
 
@@ -51,12 +51,12 @@ const SearchPage = ({ searchQuery,setSearchQuery }) => {
     }
   };
 
-  // Reset page to 1 on query change
+
   useEffect(() => {
     setPage(1);
   }, [searchQuery]);
 
-  // Fetch results on page or query change
+
   useEffect(() => {
     if (searchQuery) {
       fetchMovies(page, searchQuery);

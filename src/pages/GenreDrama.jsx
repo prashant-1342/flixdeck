@@ -40,7 +40,7 @@ const GenreDrama = ({ searchQuery }) => {
     if (pageToLoad === 1) {
       setPopularMovies(data.results);
     } else {
-      // Filter out duplicates by movie ID
+    
       setPopularMovies((prev) => {
         const newMovies = data.results.filter(
           (movie) => !prev.some((existing) => existing.id === movie.id)

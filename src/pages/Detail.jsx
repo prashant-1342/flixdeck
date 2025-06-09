@@ -93,7 +93,7 @@ const Detail = ({ searchQuery }) => {
     fetchabout();
   }, [id]);
 
-  // New useEffect to fetch trailer videos
+
   useEffect(() => {
     const fetchTrailer = async () => {
       try {
@@ -149,7 +149,7 @@ const Detail = ({ searchQuery }) => {
           alt={about.title || 'Movie backdrop'}
         />
         <div className="impdetail">
-          <div className="detailmoviename">{about.original_title}</div>
+          <div className="detailmoviename">{about.title}</div>
           <div className="comments">{about.tagline}</div>
           <div className="detailabout">{about.overview}</div>
           <div className="genres">
@@ -274,7 +274,7 @@ const Detail = ({ searchQuery }) => {
         </Swiper>
       </div>
 
-      {/* Trailer Modal */}
+  
       {showTrailer && trailerKey && (
         <div className="trailer-modal" onClick={() => setShowTrailer(false)}>
           <div className="trailer-content" onClick={(e) => e.stopPropagation()}>

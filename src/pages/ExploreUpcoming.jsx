@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-// Loader component
+
 const ImageWithLoader = ({ src, alt }) => {
   const [loaded, setLoaded] = useState(false);
 
@@ -42,7 +42,7 @@ const ExploreUpcoming = ({ searchQuery }) => {
       if (pageToLoad === 1) {
         setPopularMovies(data.results);
       } else {
-        // Filter out duplicates by movie ID
+      
         setPopularMovies((prev) => {
           const newMovies = data.results.filter(
             (movie) => !prev.some((existing) => existing.id === movie.id)
@@ -58,16 +58,16 @@ const ExploreUpcoming = ({ searchQuery }) => {
     }
   };
 
-  // Reset page to 1 when searchQuery changes
+
   useEffect(() => {
     setPage(1);
   }, [searchQuery]);
 
-  // Fetch movies with debouncing
+ 
   useEffect(() => {
     const handler = setTimeout(() => {
       fetchMovies(page, searchQuery);
-    }, 300); // 300ms debounce
+    }, 300); 
     return () => clearTimeout(handler);
   }, [page, searchQuery]);
 
@@ -77,7 +77,7 @@ const ExploreUpcoming = ({ searchQuery }) => {
     }
   };
 
-  // Handle error or empty results
+
   if (error) return <div className="text-white">Error: {error}</div>;
   if (!popularMovies.length && !loading) {
     return <div className="text-white">No movies found</div>;

@@ -41,7 +41,7 @@ const GenreMystery = ({ searchQuery }) => {
     if (pageToLoad === 1) {
       setPopularMovies(data.results);
     } else {
-      // Filter out duplicates by movie ID
+     
       setPopularMovies((prev) => {
         const newMovies = data.results.filter(
           (movie) => !prev.some((existing) => existing.id === movie.id)
@@ -56,12 +56,12 @@ const GenreMystery = ({ searchQuery }) => {
     setLoading(false);
   }
 };
-  // Reset page to 1 when searchQuery changes
+ 
   useEffect(() => {
     setPage(1);
   }, [searchQuery]);
 
-  // Fetch movies when page or searchQuery changes
+ 
   useEffect(() => {
     fetchMovies(page, searchQuery);
   }, [page, searchQuery]);

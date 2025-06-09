@@ -52,12 +52,12 @@ const ExploreTopRated = ({ searchQuery }) => {
     }
   };
 
-  // Reset page to 1 when searchQuery changes
+ 
   useEffect(() => {
     setPage(1);
   }, [searchQuery]);
 
-  // Fetch movies when page or searchQuery changes
+  
   useEffect(() => {
     fetchMovies(page, searchQuery);
   }, [page, searchQuery]);

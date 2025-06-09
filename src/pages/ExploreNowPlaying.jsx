@@ -57,12 +57,12 @@ const ExploreNowPlaying = ({ searchQuery }) => {
     }
   };
 
-  // Reset page to 1 when searchQuery changes
+ 
   useEffect(() => {
     setPage(1);
   }, [searchQuery]);
 
-  // Fetch movies with debouncing
+
   useEffect(() => {
     const handler = setTimeout(() => {
       fetchMovies(page, searchQuery);
@@ -76,7 +76,7 @@ const ExploreNowPlaying = ({ searchQuery }) => {
     }
   };
 
-  // Handle error or empty results
+ 
   if (error) return <div className="text-white">Error: {error}</div>;
   if (!popularMovies.length && !loading) {
     return <div className="text-white">No movies found</div>;
