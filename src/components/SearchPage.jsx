@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-// Optional: Loader while image loads
+// Loader component
 const ImageWithLoader = ({ src, alt }) => {
   const [loaded, setLoaded] = useState(false);
 
@@ -29,16 +30,9 @@ const SearchPage = ({ searchQuery }) => {
   const fetchMovies = async (pageToLoad, query = '') => {
     setLoading(true);
     try {
-      const baseURL = `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(query)}&language=en-US&page=${pageToLoad}`;
+      const url = `${backendUrl}/api/movies?query=${encodeURIComponent(query)}&page=${pageToLoad}`;
 
-      const res = await fetch(baseURL, {
-        method: 'GET',
-        headers: {
-          accept: 'application/json',
-          Authorization: `Bearer ${import.meta.env.VITE_TMDB_TOKEN}`,
-        },
-      });
-
+      const res = await fetch(url);
       if (!res.ok) throw new Error(`Failed to fetch page ${pageToLoad}`);
 
       const data = await res.json();

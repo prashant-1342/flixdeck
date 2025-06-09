@@ -165,13 +165,6 @@ border-radius: 3px;
 }
 
 
-
-
-
-
-
-
-
 .movieimage{
   height: 70%;
    border-radius: 7px;
@@ -191,6 +184,15 @@ border-radius: 3px;
   width: 1vw;
 }
 
+.dettop{
+  height: 90vh;
+  position: relative;
+  bottom: 0;
+
+}
+
+
+
 .dettop:after{
   height: 100%;
   width: 100%;
@@ -204,28 +206,28 @@ border-radius: 3px;
 } 
 
 .detailthumbnail{
-  height: 90vh;
-  width: 100vw;
- object-fit:cover;
- opacity: 0.2;
- 
-
+  height: 100vh;
+  width: 99vw;
+ opacity: 0.3;
+  object-fit: cover;
+  object-position: 0 -20% ;
 }
 
 .impdetail{
   position: absolute;
-  bottom: 17%;
+   top: 40%;
   left: 3%;
   color: white;
   display: flex;
   flex-direction: column;
-  width: 50vw;
+  width: 45vw;
   
 }
 
 .detailmoviename{
   margin-bottom: 1.7rem;
   font-weight: 700;
+  font-size: 2.7rem;
 }
 
 .comments{
@@ -243,12 +245,14 @@ border-radius: 3px;
   display: flex;
   gap:15px;
   margin-bottom:1rem;
+  color: rgb(226, 222, 222);
 }
 
 .referlinks{
   display: flex;
   margin-bottom: 1rem;
   gap: 1rem;
+  color: white;
 
 }
 
@@ -270,19 +274,18 @@ border-radius: 3px;
 }
 .avw{
   color: white;
+  margin-bottom: 2rem;
 }
 
 .castlist{
-  margin-top: 40px;
+  margin-top: 3rem;
   padding: 20px ;
-  width: 100vw;
+  width: 100%;
   padding-left: 3%;
-
+  margin-top: 5rem;
+  margin-bottom: 5rem;
 }
 
-.asw{
-  height: 70%;
-}
 
 .cast-image{
    height: 77%;
@@ -292,11 +295,12 @@ border-radius: 3px;
 }
 
 
+
+
 .castcards{
   height: 50vh !important;
   color: white;
-  
-  
+   
 }
 
 
@@ -345,8 +349,9 @@ border-radius: 3px;
 .image-wrapper {
   position: relative;
   width: 100%;
-  min-height: 300px;
+  height: 74%;
   background-color: #111;
+  margin-bottom: 1rem;
 }
 
 .image-wrapper img {
@@ -448,145 +453,6 @@ width: 9rem;
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @media screen and (max-width: 768px) {
  
   .popular{
@@ -599,6 +465,8 @@ width: 9rem;
 
 .navbar{
   padding-left: 0px;
+  position: fixed;
+
 }
 
   .swiper-slide-card{
@@ -633,11 +501,72 @@ width: 9rem;
     .overlay{
       left: 9%;
     }
+    
     .heading1{
     margin-top:1.1rem ;
   }
 
-  
-  
+  .popular{
+    margin-bottom: 15%;
+  }
 
+
+  .detailthumbnail{
+    height: 30vh;  
+  }
+
+    .impdetail{   
+    left: 4%;
+    width: 90%;
+    font-size: 1rem;
+    z-index: 5;
+    position: absolute;
+    top: 35%;
+    }
+
+    .dettop{
+      position: relative;
+      height: 80vh;
+    }
+
+
+    .genres{
+      font-size: 0.8rem;
+    }
+
+    
+
+    .castlist{
+      height: 37vh;
+    }
+
+    .detailthumbnail{
+      opacity: 0.7;
+      margin-top: 4rem;
+      
+    }
+    
+    .image-wrapper2{
+      height: 40%;
+    }
+
+  .similar{
+    margin-top: 1rem;
+  }
+
+  .detailmoviename{
+     font-size: 1.5rem;
+     width: 70vw;
+     font-weight: 800;
+  }
+
+  .comments{
+    font-size: 1.1rem;
+  }
+
+
+
+    
+ 
+ 
 }

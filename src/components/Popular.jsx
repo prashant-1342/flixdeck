@@ -3,6 +3,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Link } from 'react-router-dom';
 import 'swiper/css';
 import 'swiper/css/navigation';
+import 'swiper/css/free-mode';
+import 'swiper/css';
 import 'swiper/css/pagination';
 import { Navigation, A11y, Mousewheel, FreeMode } from 'swiper/modules';
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
@@ -47,39 +49,27 @@ const Popular = () => {
   return (
     <div className="popular">
       <h2 style={{ paddingLeft: '10px', color: 'white', marginBottom: '20px' }}>Popular</h2>
-      <Swiper
+            <Swiper
         modules={[
-          Navigation,
-          A11y,
-          ...(typeof window !== 'undefined' && window.innerWidth >= 1024
-            ? [Mousewheel, FreeMode]
-            : []),
-        ]}
-        grabCursor
-        mousewheel={
-          typeof window !== 'undefined' && window.innerWidth >= 1024
-            ? { forceToAxis: true }
-            : false
-        }
-        freeMode={typeof window !== 'undefined' && window.innerWidth >= 1024}
-        spaceBetween={15}
-        navigation
-        style={{ paddingBottom: '20px' }}
-        breakpoints={{
-          320: {
-            slidesPerView: 2,
-            slidesPerGroup: 2,
-          },
-          768: {
-            slidesPerView: 3,
-            slidesPerGroup: 3,
-          },
-          1024: {
-            slidesPerView: 5,
-            slidesPerGroup: 5,
-          },
-        }}
+                  Navigation,
+                  A11y,
+                  FreeMode,
+                  ...(typeof window !== 'undefined' && window.innerWidth >= 1024 ? [Mousewheel, FreeMode] : []),
+                ]}
+                 mousewheel={{ forceToAxis: true }}
+                  freeMode
+                  FreeMode
+                
+                spaceBetween={15}
+                navigation
+                style={{ paddingBottom: '20px' }}
+                breakpoints={{
+                  320: { slidesPerView: 2.5},
+                  768: { slidesPerView: 3, slidesPerGroup: 3 },
+                  1024: { slidesPerView: 5.5, slidesPerGroup: 5 },
+                }}
       >
+
         {movies.map((movie) => (
           <SwiperSlide key={movie.id}>
             <Link

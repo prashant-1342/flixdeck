@@ -12,7 +12,7 @@ const ImageWithLoader = ({ src, alt }) => {
   const [loaded, setLoaded] = useState(false);
 
   return (
-    <div className="image-wrapper">
+    <div className="image-wrapper image-wrapper2">
       {!loaded && <div className="loading-line" />}
       <img
         className="asw"
@@ -100,7 +100,7 @@ const Detail = () => {
 
   return (
     <div className="detail-container">
-      <div className="occupy"></div>
+     
       <div className="dettop">
         <img
           className="detailthumbnail"
@@ -115,8 +115,8 @@ const Detail = () => {
           alt={about.title || 'Movie backdrop'}
         />
         <div className="impdetail">
-          <h1 className="detailmoviename">{about.original_title}</h1>
-          <h6 className="comments">{about.tagline}</h6>
+          <div className="detailmoviename">{about.original_title}</div>
+          <div className="comments">{about.tagline}</div>
           <div className="detailabout">{about.overview}</div>
           <div className="genres">
             <div className="yearrelease">{about.release_date}</div>
@@ -154,15 +154,15 @@ const Detail = () => {
           <div className="asx">No cast found</div>
         ) : (
           <Swiper
-            modules={[Navigation, A11y, Mousewheel, FreeMode]}
+            modules={[ A11y, Mousewheel, FreeMode]}
             spaceBetween={20}
-            navigation
+           
             mousewheel={{ forceToAxis: true }}
             freeMode
             breakpoints={{
-              320: { slidesPerView: 1 },
-              480: { slidesPerView: 2 },
-              768: { slidesPerView: 3 },
+              320: { slidesPerView: 3 },
+              480: { slidesPerView: 5 },
+              768: { slidesPerView: 6 },
               1024: { slidesPerView: 5 },
               1280: { slidesPerView: 8 },
             }}
@@ -191,18 +191,20 @@ const Detail = () => {
           modules={[
             Navigation,
             A11y,
+            FreeMode,
             ...(typeof window !== 'undefined' && window.innerWidth >= 1024 ? [Mousewheel, FreeMode] : []),
           ]}
-          grabCursor={true}
-          mousewheel={typeof window !== 'undefined' && window.innerWidth >= 1024 ? { forceToAxis: true } : false}
-          freeMode={typeof window !== 'undefined' && window.innerWidth >= 1024}
+           mousewheel={{ forceToAxis: true }}
+            freeMode
+            FreeMode
+          
           spaceBetween={15}
           navigation
           style={{ paddingBottom: '20px' }}
           breakpoints={{
             320: { slidesPerView: 2, slidesPerGroup: 2 },
             768: { slidesPerView: 3, slidesPerGroup: 3 },
-            1024: { slidesPerView: 5, slidesPerGroup: 5 },
+            1024: { slidesPerView: 6, slidesPerGroup: 6 },
           }}
         >
           {similar.map((movie) => (

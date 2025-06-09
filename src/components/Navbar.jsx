@@ -29,7 +29,8 @@ const Navbar = ({ searchQuery, setSearchQuery }) => {
     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
       <span className="navbar-toggler-icon"></span>
     </button>
-    <Link to='/' className="navbar-brand" ><img src="/Screenshot 2025-06-04 011825-Photoroom.png" height={45 } /></Link>
+    <Link to='/' className="navbar-brand" ><img
+    onClick={() => setSearchQuery('')} src="/Screenshot 2025-06-04 011825-Photoroom.png" height={45 } /></Link>
     <div className="collapse navbar-collapse" id="navbarTogglerDemo03">
       <ul className="navbar-nav me-auto mb-2 mb-lg-0">
         <li className="nav-item dropdown">
@@ -85,12 +86,26 @@ const Navbar = ({ searchQuery, setSearchQuery }) => {
         
         
       </ul>
-      <form className="d-flex" role="search">
-        <input value={searchQuery}
-      onChange={(e) => setSearchQuery(e.target.value)}
-  className="form-control bg-dark text-white me-2" type="search" placeholder="Search" aria-label="Search"/>
-        <button className="btn btn-outline-success " type="submit">Search</button>
-      </form>
+      <form className="d-flex" role="search" onSubmit={(e) => e.preventDefault()}>
+  <input
+    value={searchQuery}
+    onChange={(e) => setSearchQuery(e.target.value)}
+    className="form-control bg-dark text-white me-2"
+    type="search"
+    placeholder="Search"
+    aria-label="Search"
+  />
+ 
+    <button
+      type="button"
+      className="btn btn-outline-danger"
+      onClick={() => setSearchQuery('')}
+    >
+      Clear
+    </button>
+  
+</form>
+
     </div>
   </div>
 </nav>
