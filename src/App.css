@@ -217,7 +217,7 @@ border-radius: 3px;
 
 .impdetail{
   position: absolute;
-   top: 40%;
+   top: 30%;
   left: 3%;
   color: white;
   display: flex;
@@ -457,6 +457,14 @@ width: 9rem;
   z-index: 2000;
 }
 
+.video-modal iframe {
+  width: 80vw;   
+  height: 45vw;  /* 16:9 aspect ratio height */
+  max-width: 1280px;  /* max size */
+  max-height: 720px;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.7);
+}
 
 
 /* Modal Content - maintains 16:9 aspect ratio */
