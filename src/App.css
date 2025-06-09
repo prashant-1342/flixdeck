@@ -201,17 +201,11 @@ border-radius: 3px;
 
 
 
-.dettop:after{
-  height: 100%;
-  width: 100%;
-  position: relative;
-   
-  
-}
 
-.dettop:after{
-  --bottom-gradient:linear-gradient(0deg, var(--bg-color) 0%, transparent 33.42%);
-} 
+
+
+
+
 
 .detailthumbnail{
   height: 100vh;
@@ -434,18 +428,22 @@ width: 9rem;
   color: white;
   font-weight: 600;
   margin: 0 auto;
+  transition: transform 500ms;
 
 }
 
+.details-button:hover {
+ background-color: rgb(255, 254, 254);
+ 
+ transform: scale(1.03);
+}
 
 
 .movname{
   transform: scale(0.8);
 }
 
-.details-button:hover {
-  background-color: rgba(255, 69, 0, 1);
-}
+
 
 
 

@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
+import SearchPage from '../components/SearchPage';
 
 const ImageWithLoader = ({ src, alt }) => {
   const [loaded, setLoaded] = useState(false);
@@ -25,7 +26,10 @@ const ImageWithLoader = ({ src, alt }) => {
   );
 };
 
-const Detail = () => {
+const Detail = ({ searchQuery }) => {
+  if (searchQuery) {
+    return <SearchPage searchQuery={searchQuery} />; // ✅ Add this
+  }
   const { id } = useParams();
   const movieid = parseInt(id);
   const [cast, setCast] = useState([]);
@@ -33,6 +37,10 @@ const Detail = () => {
   const [about, setAbout] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  // New states for trailer modal
+  const [trailerKey, setTrailerKey] = useState(null);
+  const [showTrailer, setShowTrailer] = useState(false);
 
   useEffect(() => {
     const fetchCast = async () => {
@@ -85,7 +93,26 @@ const Detail = () => {
     fetchabout();
   }, [id]);
 
+  // New useEffect to fetch trailer videos
+  useEffect(() => {
+    const fetchTrailer = async () => {
+      try {
+        const res = await fetch(`${backendUrl}/api/movie/${id}/videos`);
+        if (!res.ok) throw new Error('Failed to fetch trailer');
+        const data = await res.json();
+        const trailer = data.results.find(
+          (vid) => vid.type === 'Trailer' && vid.site === 'YouTube'
+        );
+        setTrailerKey(trailer?.key || null);
+      } catch (err) {
+        console.error(err.message);
+      }
+    };
+    fetchTrailer();
+  }, [id]);
+
   function converttoHour(minutes) {
+    if (!minutes) return '';
     const hrs = Math.floor(minutes / 60);
     const remain = minutes % 60;
     return `${hrs}h ${remain}min`;
@@ -100,17 +127,24 @@ const Detail = () => {
 
   return (
     <div className="detail-container">
-     
       <div className="dettop">
         <img
           className="detailthumbnail"
-          src={about.backdrop_path ? `https://image.tmdb.org/t/p/w780${about.backdrop_path}` : '/fallback-image.jpg'}
-          srcSet={about.backdrop_path ? `
-            https://image.tmdb.org/t/p/w300${about.backdrop_path} 300w,
-            https://image.tmdb.org/t/p/w780${about.backdrop_path} 780w,
-            https://image.tmdb.org/t/p/w1280${about.backdrop_path} 1280w,
-            https://image.tmdb.org/t/p/original${about.backdrop_path} 2000w
-          ` : ''}
+          src={
+            about.backdrop_path
+              ? `https://image.tmdb.org/t/p/w780${about.backdrop_path}`
+              : '/fallback-image.jpg'
+          }
+          srcSet={
+            about.backdrop_path
+              ? `
+                https://image.tmdb.org/t/p/w300${about.backdrop_path} 300w,
+                https://image.tmdb.org/t/p/w780${about.backdrop_path} 780w,
+                https://image.tmdb.org/t/p/w1280${about.backdrop_path} 1280w,
+                https://image.tmdb.org/t/p/original${about.backdrop_path} 2000w
+              `
+              : ''
+          }
           sizes="(max-width: 600px) 100vw, (max-width: 1024px) 90vw, 80vw"
           alt={about.title || 'Movie backdrop'}
         />
@@ -140,10 +174,19 @@ const Detail = () => {
             </a>
           </div>
           <div className="playlinks">
-            <div className="playbutton">
-              <img src="/play-button.png" className="playlogo" alt="Play trailer" />
-              Play Trailer
-            </div>
+            {/* Play Trailer Button */}
+            {trailerKey ? (
+              <div
+                className="playbutton"
+                onClick={() => setShowTrailer(true)}
+                style={{ cursor: 'pointer' }}
+              >
+                <img src="/play-button.png" className="playlogo" alt="Play trailer" />
+                Play Trailer
+              </div>
+            ) : (
+              <div className="playbutton disabled">Trailer Not Available</div>
+            )}
           </div>
         </div>
       </div>
@@ -154,9 +197,8 @@ const Detail = () => {
           <div className="asx">No cast found</div>
         ) : (
           <Swiper
-            modules={[ A11y, Mousewheel, FreeMode]}
+            modules={[A11y, Mousewheel, FreeMode]}
             spaceBetween={20}
-           
             mousewheel={{ forceToAxis: true }}
             freeMode
             breakpoints={{
@@ -192,12 +234,12 @@ const Detail = () => {
             Navigation,
             A11y,
             FreeMode,
-            ...(typeof window !== 'undefined' && window.innerWidth >= 1024 ? [Mousewheel, FreeMode] : []),
+            ...(typeof window !== 'undefined' && window.innerWidth >= 1024
+              ? [Mousewheel, FreeMode]
+              : []),
           ]}
-           mousewheel={{ forceToAxis: true }}
-            freeMode
-            FreeMode
-          
+          mousewheel={{ forceToAxis: true }}
+          freeMode
           spaceBetween={15}
           navigation
           style={{ paddingBottom: '20px' }}
@@ -230,8 +272,27 @@ const Detail = () => {
             </SwiperSlide>
           ))}
         </Swiper>
-        <div></div>
       </div>
+
+      {/* Trailer Modal */}
+      {showTrailer && trailerKey && (
+        <div className="trailer-modal" onClick={() => setShowTrailer(false)}>
+          <div className="trailer-content" onClick={(e) => e.stopPropagation()}>
+            <iframe
+              width="100%"
+              height="100%"
+              src={`https://www.youtube.com/embed/${trailerKey}?autoplay=1`}
+              title="YouTube video player"
+              frameBorder="0"
+              allow="autoplay; encrypted-media"
+              allowFullScreen
+            />
+            <button className="close-button" onClick={() => setShowTrailer(false)}>
+              ✖
+            </button>
+          </div>
+        </div>
+      )}
 
       <Footer />
     </div>

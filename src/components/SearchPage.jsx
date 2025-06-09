@@ -20,7 +20,7 @@ const ImageWithLoader = ({ src, alt }) => {
   );
 };
 
-const SearchPage = ({ searchQuery }) => {
+const SearchPage = ({ searchQuery,setSearchQuery }) => {
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(500);
@@ -80,9 +80,9 @@ const SearchPage = ({ searchQuery }) => {
       <div className="container-fluid mt-3">
         <div className="row">
           {movies.map((movie) => (
-            <div className="col-6 col-md-2 mb-4 con" key={movie.id}>
-              <Link to={`/detail/${movie.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                <div className="card movie-card h-100 text-white">
+            <div onClick={() => setSearchQuery('')} className="col-6 col-md-2 mb-4 con" key={movie.id}>
+              <Link onClick={() => setSearchQuery('')}  to={`/detail/${movie.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                <div  className="card movie-card h-100 text-white">
                   <ImageWithLoader
                     src={
                       movie.poster_path

@@ -8,11 +8,11 @@ import Footer from '../components/Footer'
 import SearchPage from '../components/SearchPage'
 
 
-const Homepage = ({searchQuery}) => {
+const Homepage = ({searchQuery,setSearchQuery}) => {
   return (
   <>
     {searchQuery ? (
-      <SearchPage  searchQuery={searchQuery} />
+      <SearchPage  searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
     ) : (
       <div className="pagescontainer">
         <Movies searchQuery={searchQuery} />

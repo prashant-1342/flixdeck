@@ -51,6 +51,27 @@ app.get('/api/movies', async (req, res) => {
   }
 });
 
+// Route: GET /api/movie/:id/videos for movie trailers/videos
+app.get('/api/movie/:id/videos', async (req, res) => {
+  const { id } = req.params;
+
+  if (isNaN(id) || id < 1) {
+    return res.status(400).json({ error: 'Invalid movie ID' });
+  }
+
+  try {
+    const response = await axiosInstance.get(`/movie/${id}/videos?language=en-US`);
+    res.json(response.data);
+  } catch (err) {
+    console.error('Error fetching movie videos:', {
+      message: err.message,
+      status: err.response?.status,
+      data: err.response?.data,
+    });
+    res.status(500).json({ error: 'Failed to fetch movie videos' });
+  }
+});
+
 // Route: GET /api/movie/:id for movie details
 app.get('/api/movie/:id', async (req, res) => {
   const { id } = req.params;
