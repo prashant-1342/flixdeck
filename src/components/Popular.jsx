@@ -45,6 +45,8 @@ const Popular = () => {
   }, []);
 
   if (error) return <div className="text-white">Error: {error}</div>;
+  const isMobile = window.innerWidth < 768;
+
 
   return (
     <div className="popular">
@@ -65,8 +67,8 @@ const Popular = () => {
                 style={{ paddingBottom: '20px' }}
                 breakpoints={{
                   320: { slidesPerView: 2.5},
-                  768: { slidesPerView: 3, slidesPerGroup: 3 },
-                  1024: { slidesPerView: 5.5, slidesPerGroup: 5 },
+                  768: { slidesPerView: 3},
+                  1024: { slidesPerView: 5.5},
                 }}
       >
 

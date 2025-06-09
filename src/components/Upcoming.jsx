@@ -49,26 +49,26 @@ const Upcoming = () => {
   return (
     <div className="popular">
       <h2 style={{ paddingLeft: '10px', color: 'white', marginBottom: '20px' }}>Upcoming</h2>
-    <Swiper
-        modules={[
-                  Navigation,
-                  A11y,
-                  FreeMode,
-                  ...(typeof window !== 'undefined' && window.innerWidth >= 1024 ? [Mousewheel, FreeMode] : []),
-                ]}
-                 mousewheel={{ forceToAxis: true }}
-                  freeMode
-                  FreeMode
-                
-                spaceBetween={15}
-                navigation
-                style={{ paddingBottom: '20px' }}
-                breakpoints={{
-                  320: { slidesPerView: 2.5, slidesPerGroup: 2 },
-                  768: { slidesPerView: 3, slidesPerGroup: 3 },
-                  1024: { slidesPerView: 5.5, slidesPerGroup: 5 },
-                }}
-      >
+   <Swiper
+           modules={[
+                     Navigation,
+                     A11y,
+                     FreeMode,
+                     ...(typeof window !== 'undefined' && window.innerWidth >= 1024 ? [Mousewheel, FreeMode] : []),
+                   ]}
+                    mousewheel={{ forceToAxis: true }}
+                     freeMode
+                     FreeMode
+                   
+                   spaceBetween={15}
+                   navigation
+                   style={{ paddingBottom: '20px' }}
+                   breakpoints={{
+                     320: { slidesPerView: 2.5},
+                     768: { slidesPerView: 3},
+                     1024: { slidesPerView: 5.5},
+                   }}
+         >
 
         {movies.map((movie) => (
           <SwiperSlide key={movie.id}>

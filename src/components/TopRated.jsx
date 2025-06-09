@@ -45,7 +45,7 @@ const TopRated = () => {
   return (
     <div className="popular">
       <h2 style={{ paddingLeft: '10px', color: 'white', marginBottom: '20px' }}>Top Rated</h2>
-      <Swiper
+     <Swiper
         modules={[
                   Navigation,
                   A11y,
@@ -60,9 +60,9 @@ const TopRated = () => {
                 navigation
                 style={{ paddingBottom: '20px' }}
                 breakpoints={{
-                  320: { slidesPerView: 2.5, slidesPerGroup: 2 },
-                  768: { slidesPerView: 3, slidesPerGroup: 3 },
-                  1024: { slidesPerView: 5.5, slidesPerGroup: 5 },
+                  320: { slidesPerView: 2.5},
+                  768: { slidesPerView: 3},
+                  1024: { slidesPerView: 5.5},
                 }}
       >
         {movies.map((movie) => (

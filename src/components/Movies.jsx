@@ -79,7 +79,7 @@ const Movies = () => {
             <div className='slide-content'>
               <img className='slide' src={slide2} alt='Slide 2' />
               <div className='overlay'>
-                <img className='movname' style={{ transform: 'scale(0.3)' }} src={movieName2} alt='Movie Name 2' />
+                <img className='movname' style={{ transform: 'scale(0.5)' }} src={movieName2} alt='Movie Name 2' />
                 <button className='details-button'>More Details</button>
               </div>
             </div>
@@ -91,7 +91,7 @@ const Movies = () => {
             <div className='slide-content'>
               <img className='slide' src={slide3} alt='Slide 3' />
               <div className='overlay'>
-                <img className='movname' src={movieName3} alt='Movie Name 3' />
+                <img className='movname' style={{transform:'scale(0.7)'}} src={movieName3} alt='Movie Name 3' />
                 <button className='details-button'>More Details</button>
               </div>
             </div>
@@ -103,7 +103,7 @@ const Movies = () => {
             <div className='slide-content'>
               <img className='slide' src={slide4} alt='Slide 4' />
               <div className='overlay'>
-                <img className='movname' src={movieName4} alt='Movie Name 4' />
+                <img className='movname' style={{transform:'scale(0.6)'}} src={movieName4} alt='Movie Name 4' />
                 <button className='details-button'>More Details</button>
               </div>
             </div>

@@ -64,9 +64,9 @@ const Animation = () => {
                 navigation
                 style={{ paddingBottom: '20px' }}
                 breakpoints={{
-                  320: { slidesPerView: 2.5, slidesPerGroup: 2 },
-                  768: { slidesPerView: 3, slidesPerGroup: 3 },
-                  1024: { slidesPerView: 5.5, slidesPerGroup: 5 },
+                  320: { slidesPerView: 2.5},
+                  768: { slidesPerView: 3},
+                  1024: { slidesPerView: 5.5},
                 }}
       >
 
