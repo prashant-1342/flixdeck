@@ -368,7 +368,7 @@ position: absolute;
 .image-wrapper {
   position: relative;
   width: 100%;
-  min-height: 74%;
+  height: 74%;
   background-color: #111;
   margin-bottom: 1rem;
 }
