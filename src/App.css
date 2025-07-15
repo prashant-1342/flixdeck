@@ -348,7 +348,7 @@ position: absolute;
 
 
 .loading-line {
-  min-height: 100%;
+  height: 4px;
   background: linear-gradient(90deg, #222, #444, #222);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
