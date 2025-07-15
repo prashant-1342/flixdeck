@@ -191,7 +191,7 @@ position: absolute;
 .movieimage{
   height: 70%;
    border-radius: 7px;
-    margin-bottom: 20px;
+    
 }
 
 .vyu{
@@ -348,13 +348,21 @@ position: absolute;
 
 
 .loading-line {
-  height: 4px;
+  min-height: 100%;
   background: linear-gradient(90deg, #222, #444, #222);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
   margin: 10px;
   border-radius: 4px;
 }
+
+#nprogress .bar {
+  background: #ff0057; /* neon pink or pick your color */
+  height: 3px;
+}
+
+
+
 
 @keyframes shimmer {
   0% {
@@ -368,7 +376,7 @@ position: absolute;
 .image-wrapper {
   position: relative;
   width: 100%;
-  height: 74%;
+  min-height: 74%;
   background-color: #111;
   margin-bottom: 1rem;
 }

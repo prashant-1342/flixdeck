@@ -83,6 +83,7 @@ const fetchMovies = async (pageToLoad, query = '') => {
               <Link to={`/detail/${movie.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                 <div className="card movie-card h-100 text-white">
                   <ImageWithLoader
+                  className="ayvg"
                     src={
                       movie.poster_path
                         ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`

@@ -5,6 +5,9 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/free-mode';
 import 'swiper/css';
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css';
+
 import 'swiper/css/pagination';
 import { Navigation, A11y, Mousewheel, FreeMode } from 'swiper/modules';
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
@@ -31,18 +34,22 @@ const Popular = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchMovies = async () => {
-      try {
-        const res = await fetch(`${backendUrl}/api/movies?type=popular&page=1`);
-        if (!res.ok) throw new Error('Failed to fetch popular movies');
-        const data = await res.json();
-        setMovies(data.results);
-      } catch (err) {
-        setError(err.message);
-      }
-    };
-    fetchMovies();
-  }, []);
+  const fetchMovies = async () => {
+    NProgress.start(); 
+    try {
+      const res = await fetch(`${backendUrl}/api/movies?type=popular&page=1`);
+      if (!res.ok) throw new Error('Failed to fetch popular movies');
+      const data = await res.json();
+      setMovies(data.results);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      NProgress.done(); 
+    }
+  };
+  fetchMovies();
+}, []);
+
 
   if (error) return <div className="text-white">Error: {error}</div>;
   const isMobile = window.innerWidth < 768;
