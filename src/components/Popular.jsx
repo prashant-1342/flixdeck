@@ -6,6 +6,8 @@ import 'swiper/css/navigation';
 import 'swiper/css/free-mode';
 import 'swiper/css';
 import 'swiper/css/pagination';
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css';
 import { Navigation, A11y, Mousewheel, FreeMode } from 'swiper/modules';
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -32,6 +34,7 @@ const Popular = () => {
 
   useEffect(() => {
     const fetchMovies = async () => {
+       NProgress.start(); 
       try {
         const res = await fetch(`${backendUrl}/api/movies?type=popular&page=1`);
         if (!res.ok) throw new Error('Failed to fetch popular movies');
@@ -39,7 +42,9 @@ const Popular = () => {
         setMovies(data.results);
       } catch (err) {
         setError(err.message);
-      }
+      } finally {
+      NProgress.done(); 
+    }
     };
     fetchMovies();
   }, []);
