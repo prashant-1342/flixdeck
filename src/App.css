@@ -315,16 +315,11 @@ position: absolute;
 
 
 
-
 .castcards{
-  height: 50vh !important;
+  /* height: 20vh !important; */
   color: white;
    
 }
-
-
-
-
 
 
 .similar{
@@ -628,6 +623,22 @@ width: 9rem;
     .image-wrapper2{
       height: 40%;
     }
+
+    .detailabout{
+      position: relative;
+      display: -webkit-box;      
+  -webkit-line-clamp: 17;    
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+ 
+    }
+
+     /* .detailabout::after{
+    content: '...';
+    position: absolute;
+    right: 0;
+    bottom: 0;
+   } */
 
   .similar{
     margin-top: 1rem;

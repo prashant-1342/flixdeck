@@ -11,6 +11,7 @@ import SearchPage from '../components/SearchPage';
 
 const ImageWithLoader = ({ src, alt }) => {
   const [loaded, setLoaded] = useState(false);
+ 
 
   return (
     <div className="image-wrapper image-wrapper2">
@@ -37,6 +38,7 @@ const Detail = ({ searchQuery }) => {
   const [about, setAbout] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  
 
   // New states for trailer modal
   const [trailerKey, setTrailerKey] = useState(null);
@@ -75,6 +77,7 @@ const Detail = ({ searchQuery }) => {
     };
     fetchsimilar();
   }, [id]);
+  
 
   useEffect(() => {
     const fetchabout = async () => {
@@ -83,6 +86,7 @@ const Detail = ({ searchQuery }) => {
         const res = await fetch(`${backendUrl}/api/movie/${id}`);
         if (!res.ok) throw new Error('Failed to fetch movie details');
         const data = await res.json();
+       
         setAbout(data);
       } catch (err) {
         setError(err.message);
@@ -229,6 +233,9 @@ const Detail = ({ searchQuery }) => {
 
       <div className="similar">
         <h5 className="avw">Similar Movies</h5>
+        {similar.length === 0 ? (
+          <div className="asx">No Similar Movies found</div>
+        ) : (
         <Swiper
           modules={[
             Navigation,
@@ -272,6 +279,7 @@ const Detail = ({ searchQuery }) => {
             </SwiperSlide>
           ))}
         </Swiper>
+        )}
       </div>
 
   
