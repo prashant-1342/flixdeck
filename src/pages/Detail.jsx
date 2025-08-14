@@ -115,6 +115,13 @@ const Detail = ({ searchQuery }) => {
     fetchTrailer();
   }, [id]);
 
+  function truncateByWords(text, limit) {
+  if (!text) return "";
+  const words = text.split(" ");
+  if (words.length <= limit) return text;
+  return words.slice(0, limit).join(" ") + " ...";
+}
+
   function converttoHour(minutes) {
     if (!minutes) return '';
     const hrs = Math.floor(minutes / 60);
@@ -155,7 +162,7 @@ const Detail = ({ searchQuery }) => {
         <div className="impdetail">
           <div className="detailmoviename">{about.title}</div>
           <div className="comments">{about.tagline}</div>
-          <div className="detailabout">{about.overview}</div>
+          <div className="detailabout">  {truncateByWords(about.overview, 50)}</div>
           <div className="genres">
             <div className="yearrelease">{about.release_date}</div>
             <div className="genre">

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+
 import { Link } from 'react-router-dom';
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -19,6 +20,16 @@ const ImageWithLoader = ({ src, alt }) => {
     </div>
   );
 };
+const closenavbar = () => {
+  const navbar = document.getElementById('navbarTogglerDemo03');
+  if (navbar && navbar.classList.contains('show')) {
+    const collapseInstance = window.bootstrap.Collapse.getInstance(navbar)
+      || new window.bootstrap.Collapse(navbar);
+    collapseInstance.hide();
+  }
+};
+
+
 
 const SearchPage = ({ searchQuery,setSearchQuery }) => {
   const [movies, setMovies] = useState([]);
@@ -80,8 +91,8 @@ const SearchPage = ({ searchQuery,setSearchQuery }) => {
       <div className="container-fluid mt-3">
         <div className="row">
           {movies.map((movie) => (
-            <div onClick={() => setSearchQuery('')} className="col-6 col-md-2 mb-4 con" key={movie.id}>
-              <Link onClick={() => setSearchQuery('')}  to={`/detail/${movie.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+            <div onClick={() => {setSearchQuery(''); closenavbar();} } className="col-6 col-md-2 mb-4 con" key={movie.id}>
+              <Link onClick={() =>{ setSearchQuery('') ;closenavbar(); }}  to={`/detail/${movie.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                 <div  className="card movie-card h-100 text-white">
                   <ImageWithLoader
                     src={
