@@ -265,7 +265,7 @@ body {
 
 .detailabout {
   font-size: 1.1rem;
-  margin-bottom: 1rem;
+  
 }
 
 .genres {
@@ -638,7 +638,7 @@ body {
  .detailabout {
     position: relative;
     display: -webkit-box;
-    -webkit-line-clamp: 30;  /* Fewer lines for mobile */
+    -webkit-line-clamp: 40;  /* Fewer lines for mobile */
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
