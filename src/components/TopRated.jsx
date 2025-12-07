@@ -21,7 +21,7 @@ const ImageWithLoader = ({ src, alt }) => {
         style={{ display: loaded ? 'block' : 'none' }}
       />
     </>
-  );
+  );  
 };
 
 const TopRated = () => {

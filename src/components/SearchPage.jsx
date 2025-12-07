@@ -42,7 +42,7 @@ const SearchPage = ({ searchQuery,setSearchQuery }) => {
     setLoading(true);
     try {
       const url = `${backendUrl}/api/movies?query=${encodeURIComponent(query)}&page=${pageToLoad}`;
-
+      
       const res = await fetch(url);
       if (!res.ok) throw new Error(`Failed to fetch page ${pageToLoad}`);
 
@@ -87,7 +87,7 @@ const SearchPage = ({ searchQuery,setSearchQuery }) => {
       <h2 className="heading2">
         {searchQuery ? `Search results for "${searchQuery}"` : 'Search Results'}
       </h2>
-
+    
       <div className="container-fluid mt-3">
         <div className="row">
           {movies.map((movie) => (
